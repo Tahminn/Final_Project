@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Service.Services;
+using Service.Services.AccountServices;
 using Service.Services.Interfaces;
 using Service.Services.PatientServices;
 
@@ -12,6 +13,12 @@ namespace Service
             services.AddScoped<IAppUserService, AppUserService>();
 
             services.AddScoped<IPatientService, PatientService>();
+
+            services.AddTransient<ITokenService, TokenService>();
+
+            services.AddScoped<IEmailService, EmailService>();
+
+            services.AddScoped<IAccountService, AccountService>();
 
             return services;
         }
