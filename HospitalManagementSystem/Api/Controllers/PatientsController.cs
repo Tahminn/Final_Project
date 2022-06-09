@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Repository.Data;
+using Service.Constants;
 using Service.Services.Interfaces;
 
 namespace Api.Controllers
@@ -8,18 +10,23 @@ namespace Api.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IPatientService _patientService;
+        private readonly IAuthorizationService _authorizationService;
+
         public PatientsController(AppDbContext context,
-                                  IPatientService patientService)
+                                  IPatientService patientService,
+                                  IAuthorizationService authorizationService)
         {
             _context = context;
             _patientService = patientService;
+            _authorizationService = authorizationService;
         }
 
-        //GET: api/Patients
-        [Route("GetPpatients")]
+        [Route("get-all")]
         [HttpGet]
         public async Task<IActionResult> GetPatients()
         {
+            if (!_authorizationService.AuthorizeAsync(User, Permissions.Patients.View).Result.Succeeded) return Unauthorized();
+
             return Ok(await _patientService.GetPatients());
         }
 

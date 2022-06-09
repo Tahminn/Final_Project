@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Service.Models;
 using Service.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,7 +17,7 @@ namespace Service.Services
         {
             _configuration = configuration;
         }
-        public string GenerateJwtToken(string username, string name, string surname, List<string> roles)
+        public string GenerateJwtToken(string username, string name, string surname, int expireDuration, List<string> roles, List<IList<Claim>> roleClaims)
         {
             var claims = new List<Claim>
         {
@@ -31,9 +33,17 @@ namespace Service.Services
                 claims.Add(new Claim(ClaimTypes.Role, role));
             });
 
+            foreach (var roleClaimm in roleClaims)
+            {
+                foreach (var roleClaim in roleClaimm)
+                {
+                    claims.Add(new Claim(ClaimTypes.WindowsUserClaim , roleClaim.Value.ToString()));
+                }
+            }
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.UtcNow.AddDays(1);
+            var expires = DateTime.UtcNow.AddMinutes(expireDuration);
 
             var token = new JwtSecurityToken(
                 _configuration["Jwt:Issuer"],

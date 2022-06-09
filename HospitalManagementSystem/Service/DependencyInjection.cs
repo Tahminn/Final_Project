@@ -26,6 +26,8 @@ namespace Service
 
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
+            services.AddScoped<IRoleClaimsService, RoleClaimsService>();
+
             return services;
         }
     }

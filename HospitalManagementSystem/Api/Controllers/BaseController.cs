@@ -5,6 +5,8 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class BaseController : ControllerBase { }
+    public class BaseController : ControllerBase
+    {
+        private readonly IAuthorizationService _authorizationService;
+    }
 }

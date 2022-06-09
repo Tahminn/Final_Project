@@ -20,5 +20,26 @@
             public const string Edit = "Permissions.Patients.Edit";
             public const string Delete = "Permissions.Patients.Delete";
         }
+        public static class Doctors
+        {
+            public const string View = "Permissions.Doctors.View";
+            public const string Create = "Permissions.Doctors.Create";
+            public const string Edit = "Permissions.Doctors.Edit";
+            public const string Delete = "Permissions.Doctors.Delete";
+        }
+        public static class Nurses
+        {
+            public const string View = "Permissions.Nurses.View";
+            public const string Create = "Permissions.Nurses.Create";
+            public const string Edit = "Permissions.Nurses.Edit";
+            public const string Delete = "Permissions.Nurses.Delete";
+        }
+        public static class Receptionists
+        {
+            public const string View = "Permissions.Receptionists.View";
+            public const string Create = "Permissions.Receptionists.Create";
+            public const string Edit = "Permissions.Receptionists.Edit";
+            public const string Delete = "Permissions.Receptionists.Delete";
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Constants;
 using Service.Helpers;
 using Service.Models;
+using Service.Services.Interfaces;
 
 namespace Api.Controllers
 {
@@ -12,38 +13,25 @@ namespace Api.Controllers
     [Authorize(Roles = "SuperAdmin")]
     public class PermissionController : ControllerBase
     {
+        private readonly IRoleClaimsService _roleClaimsService;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public PermissionController(RoleManager<IdentityRole> roleManager)
+        public PermissionController(IRoleClaimsService roleClaimsService,
+                                    RoleManager<IdentityRole> roleManager)
         {
+            _roleClaimsService = roleClaimsService;
             _roleManager = roleManager;
         }
 
-        [Route("GetPermissions")]
+        [Route("get-permissions")]
         [HttpGet]
         public async Task<ActionResult> Index(string roleId)
         {
-            var model = new PermissionDTO();
-            var allPermissions = new List<RoleClaimsDTO>();
-            allPermissions.GetPermissions(typeof(Permissions.Patients), roleId);
-            var role = await _roleManager.FindByIdAsync(roleId);
-            model.RoleId = roleId;
-            var claims = await _roleManager.GetClaimsAsync(role);
-            var allClaimValues = allPermissions.Select(a => a.Value).ToList();
-            var roleClaimValues = claims.Select(a => a.Value).ToList();
-            var authorizedClaims = allClaimValues.Intersect(roleClaimValues).ToList();
-            foreach (var permission in allPermissions)
-            {
-                if (authorizedClaims.Any(a => a == permission.Value))
-                {
-                    permission.Selected = true;
-                }
-            }
-            model.RoleClaims = allPermissions;
-            return Ok(model);
+            var roleClaims = await _roleClaimsService.GetRoleClaims(roleId);
+            return Ok(roleClaims);
         }
 
-        [Route("UpdatePermissions")]
+        [Route("update-permissions")]
         [HttpPost]
         public async Task<IActionResult> Update(PermissionDTO model)
         {

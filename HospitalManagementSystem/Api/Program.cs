@@ -21,11 +21,19 @@ var builder = WebApplication.CreateBuilder(args);
 //    option.IdleTimeout = TimeSpan.FromHours(12);
 //});
 
+#region Add Controlllers
+
 builder.Services.AddControllers()
     .AddFluentValidation()
     .AddNewtonsoftJson(
     options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+
+#endregion
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
                .AddEntityFrameworkStores<AppDbContext>()
@@ -108,6 +116,8 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+#region Create Default Roles And User On Start Up
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -128,6 +138,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+#endregion
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -137,10 +149,7 @@ if (app.Environment.IsDevelopment())
 
 //Reference : Rovshen Quliyev
 
-app.UseCors(x => x
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 var cultureInfo = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;

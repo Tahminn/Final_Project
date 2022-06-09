@@ -56,7 +56,9 @@ namespace Service.Seeds
         {
             var adminRole = await roleManager.FindByNameAsync("SuperAdmin");
             await roleManager.AddPermissionClaim(adminRole, "Patients");
-            await roleManager.AddPermissionClaim(adminRole, "AppUsers");
+            await roleManager.AddPermissionClaim(adminRole, "Doctors");
+            await roleManager.AddPermissionClaim(adminRole, "Nurses");
+            await roleManager.AddPermissionClaim(adminRole, "Receptionist");
         }
 
         public static async Task AddPermissionClaim(this RoleManager<IdentityRole> roleManager, IdentityRole role, string module)
