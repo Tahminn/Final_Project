@@ -2,12 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Repository.Data;
 using Service.DTOs.AccountDTOs;
 using Service.Services.Interfaces;
-using Service.Utilities.Helpers;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace Api.Controllers
 {
@@ -41,9 +37,9 @@ namespace Api.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
         {
             await _accountService.Register(registerDTO);
-            AppUser appUser = await _userManager.FindByEmailAsync(registerDTO.Email);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-            var link = Url.Action(nameof(VerifyEmail), "Account", new { userId = appUser.Id, token = code }, Request.Scheme, Request.Host.ToString());
+            AppUser AppUser = await _userManager.FindByEmailAsync(registerDTO.Email);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(AppUser);
+            var link = Url.Action(nameof(VerifyEmail), "Account", new { userId = AppUser.Id, token = code }, Request.Scheme, Request.Host.ToString());
             await _emailService.RegisterEmail(registerDTO, link);
             return Ok();
         }
@@ -81,15 +77,14 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        [Route("GetMe")]
-        public async Task<IActionResult> GetMe([FromBody] string username)
+        [Route("CurrentUser")]
+        public async Task<IActionResult> CurrentUser()
         {
-            if (username == null) return BadRequest();
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-            var user = await _userManager.FindByEmailAsync(username);
-            if (user is null) return NotFound();
+            if (currentUser is null) return NotFound();
 
-            return Ok(user);
+            return Ok(currentUser);
         }
 
         [HttpPost]

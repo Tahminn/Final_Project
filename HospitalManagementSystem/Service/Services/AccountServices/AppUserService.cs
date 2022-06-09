@@ -9,24 +9,24 @@ namespace Service.Services
 {
     public class AppUserService : IAppUserService
     {
-        private readonly IAppUserRepo _appUserRepo;
+        private readonly IAppUserRepo _AppUserRepo;
         private readonly IMapper _mapper;
 
         public AppUserService(IMapper mapper,
-                              IAppUserRepo appUserRepo)
+                              IAppUserRepo AppUserRepo)
         {
             _mapper = mapper;
-            _appUserRepo = appUserRepo;
+            _AppUserRepo = AppUserRepo;
         }
 
         public async Task<List<UserDTO>> GetUsers(Expression<Func<AppUser, bool>> predicate)
         {
-            return _mapper.Map<List<UserDTO>>(await _appUserRepo.FindAllAsync(predicate));
+            return _mapper.Map<List<UserDTO>>(await _AppUserRepo.FindAllAsync(predicate));
         }
 
         public async Task<UserDTO> GetUser(Expression<Func<AppUser, bool>> predicate)
         {
-            return _mapper.Map<UserDTO>(await _appUserRepo.FindAsync(predicate));
+            return _mapper.Map<UserDTO>(await _AppUserRepo.FindAsync(predicate));
         }
     }
 }

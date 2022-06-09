@@ -4,7 +4,7 @@
 
 namespace Repository.Migrations
 {
-    public partial class CreateUserPatientRelTables : Migration
+    public partial class AddDefaultUsersRoles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -134,12 +134,12 @@ namespace Repository.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: true),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsMarried = table.Column<bool>(type: "bit", nullable: false),
+                    IsMarried = table.Column<bool>(type: "bit", nullable: true),
                     GenderId = table.Column<int>(type: "int", nullable: true),
                     OccupationId = table.Column<int>(type: "int", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),

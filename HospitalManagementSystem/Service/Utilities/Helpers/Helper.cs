@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Service.Utilities.Helpers
+﻿namespace Service.Utilities.Helpers
 {
     public static class Helper
     {
@@ -16,11 +14,5 @@ namespace Service.Utilities.Helpers
                 System.IO.File.Delete(path);
             }
         }
-    }
-
-    public enum UserRoles
-    {
-        Admin,
-        Member
     }
 }

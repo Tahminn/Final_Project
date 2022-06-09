@@ -9,7 +9,7 @@ using Repository;
 using Repository.Data;
 using Service;
 using Service.Mapping;
-using Service.Utilities.Helpers;
+using Service.Seeds;
 using Swashbuckle.AspNetCore.Filters;
 using System.Globalization;
 using System.Text;
@@ -55,9 +55,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services
                 .AddAuthentication(options =>
                 {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
                .AddJwtBearer(cfg =>
                {
@@ -107,6 +107,26 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    var logger = loggerFactory.CreateLogger("app");
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<AppUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        await DefaultRoles.SeedAsync(userManager, roleManager);
+        await DefaultUsers.SeedSuperAdminAsync(userManager, roleManager);
+        logger.LogInformation("Finished Seeding Default Data");
+        logger.LogInformation("Application Starting");
+    }
+    catch (Exception ex)
+    {
+        logger.LogWarning(ex, "An error occurred seeding the DB");
+    }
+}
 
 if (app.Environment.IsDevelopment())
 {

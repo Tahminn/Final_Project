@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LessonMigration.Utilities.Pagination
+﻿namespace LessonMigration.Utilities.Pagination
 {
     public class Paginate<T>
     {
@@ -14,7 +12,7 @@ namespace LessonMigration.Utilities.Pagination
         public int CurrentPage { get; set; }
         public int TotalPage { get; set; }
 
-        public bool HasPrevious 
+        public bool HasPrevious
         {
             get
             {

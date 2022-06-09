@@ -12,14 +12,14 @@ using Repository.Data;
 namespace Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220517132543_CreateUserPatientRelTables")]
-    partial class CreateUserPatientRelTables
+    [Migration("20220608235311_AddDefaultUsersRoles")]
+    partial class AddDefaultUsersRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -35,10 +35,10 @@ namespace Repository.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -64,7 +64,7 @@ namespace Repository.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsMarried")
+                    b.Property<bool?>("IsMarried")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -699,7 +699,7 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Entities.Patient", b =>
                 {
                     b.HasOne("Domain.Entities.Gender", "Gender")
-                        .WithMany()
+                        .WithMany("Patients")
                         .HasForeignKey("GenderId");
 
                     b.Navigation("Gender");
@@ -708,7 +708,7 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Entities.PatientBill", b =>
                 {
                     b.HasOne("Domain.Entities.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("PatientBills")
                         .HasForeignKey("PatientId");
 
                     b.Navigation("Patient");
@@ -721,7 +721,7 @@ namespace Repository.Migrations
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("Domain.Entities.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("PatientTests")
                         .HasForeignKey("PatientId");
 
                     b.Navigation("AppUser");
@@ -732,11 +732,11 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Entities.PatientTriage", b =>
                 {
                     b.HasOne("Domain.Entities.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("PatientTriages")
                         .HasForeignKey("PatientId");
 
                     b.HasOne("Domain.Entities.Triage", "Triage")
-                        .WithMany()
+                        .WithMany("PatientTriages")
                         .HasForeignKey("TriageId");
 
                     b.Navigation("Patient");
@@ -747,7 +747,7 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Entities.Payment", b =>
                 {
                     b.HasOne("Domain.Entities.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Payments")
                         .HasForeignKey("PatientId");
 
                     b.Navigation("Patient");
@@ -802,6 +802,27 @@ namespace Repository.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Gender", b =>
+                {
+                    b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Patient", b =>
+                {
+                    b.Navigation("PatientBills");
+
+                    b.Navigation("PatientTests");
+
+                    b.Navigation("PatientTriages");
+
+                    b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Triage", b =>
+                {
+                    b.Navigation("PatientTriages");
                 });
 #pragma warning restore 612, 618
         }

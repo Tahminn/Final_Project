@@ -10,7 +10,6 @@ namespace Repository.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         #region DbSetClasses
-
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Birth> Births { get; set; }
         public DbSet<Department> Departments { get; set; }

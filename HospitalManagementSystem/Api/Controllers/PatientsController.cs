@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Repository.Data;
 using Service.Services.Interfaces;
 
@@ -19,6 +16,7 @@ namespace Api.Controllers
         }
 
         //GET: api/Patients
+        [Route("GetPpatients")]
         [HttpGet]
         public async Task<IActionResult> GetPatients()
         {

@@ -6,11 +6,6 @@ using Microsoft.Extensions.Configuration;
 using MimeKit;
 using Service.DTOs.AccountDTOs;
 using Service.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Services.AccountServices
 {
@@ -30,11 +25,11 @@ namespace Service.Services.AccountServices
         {
             var emailConfig = _config.GetSection("EmailConfiguration").Get<EmailConfiguration>();
 
-            AppUser appUser = await _userManager.FindByEmailAsync(registerDTO.Email);
+            AppUser AppUser = await _userManager.FindByEmailAsync(registerDTO.Email);
 
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(emailConfig.Title, emailConfig.From));
-            message.To.Add(new MailboxAddress(appUser.Name, appUser.Email));
+            message.To.Add(new MailboxAddress(AppUser.Name, AppUser.Email));
             message.Subject = emailConfig.Subject;
             string emailbody = link;
             message.Body = new TextPart() { Text = emailbody };

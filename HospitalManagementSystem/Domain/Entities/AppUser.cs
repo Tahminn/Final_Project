@@ -4,6 +4,12 @@ namespace Domain.Entities
 {
     public class AppUser : IdentityUser
     {
+        public AppUser()
+        {
+        }
+        public AppUser(string userName) : base(userName)
+        {
+        }
         public string Name { get; set; }
         public string Surname { get; set; }
         public int? Age { get; set; }

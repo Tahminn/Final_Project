@@ -3,11 +3,6 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Service.DTOs.AccountDTOs;
 using Service.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Services.AccountServices
 {

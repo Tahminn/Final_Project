@@ -1,6 +1,6 @@
-﻿using Service.Services.Interfaces;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Service.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -15,7 +15,7 @@ namespace Service.Services
         {
             _configuration = configuration;
         }
-        public string GenerateJwtToken(string username,string name, string surname, List<string> roles)
+        public string GenerateJwtToken(string username, string name, string surname, List<string> roles)
         {
             var claims = new List<Claim>
         {
