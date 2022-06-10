@@ -30,14 +30,14 @@ namespace Service.Services
 
             roles.ForEach(role =>
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Prn, role));
             });
 
             foreach (var roleClaimm in roleClaims)
             {
                 foreach (var roleClaim in roleClaimm)
                 {
-                    claims.Add(new Claim(ClaimTypes.WindowsUserClaim , roleClaim.Value.ToString()));
+                    claims.Add(new Claim(JwtRegisteredClaimNames.Sid , roleClaim.Value.ToString()));
                 }
             }
 

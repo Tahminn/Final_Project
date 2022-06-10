@@ -7,6 +7,10 @@
         public int Age { get; set; }
         public GenderDTO Gender { get; set; }
         //public int GenderId { get; set; }
+        public ICollection<PatientBillDTO> PatientBills { get; set; }
+        public ICollection<PatientTestDTO> PatientTests { get; set; }
+        public ICollection<PatientTriageDTO> PatientTriages { get; set; }
+        public ICollection<PaymentDTO> Payments { get; set; }
         public DateTime Birthday { get; set; }
         public string Address { get; set; }
         public string BloodType { get; set; }
