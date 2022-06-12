@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-using Service.Permission;
 using Service.Services;
 using Service.Services.AccountServices;
 using Service.Services.Interfaces;
@@ -12,7 +11,7 @@ namespace Service
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IAppUserService, AppUserService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IPatientService, PatientService>();
 
@@ -22,9 +21,9 @@ namespace Service
 
             services.AddScoped<IAccountService, AccountService>();
 
-            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            //services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
-            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            //services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             services.AddScoped<IRoleClaimsService, RoleClaimsService>();
 

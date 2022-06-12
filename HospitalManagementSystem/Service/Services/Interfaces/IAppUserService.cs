@@ -1,12 +1,16 @@
 ﻿using Domain.Entities;
 using Service.DTOs;
+using Service.DTOs.ControllerPropDTOs.UserDTOs;
+using Service.DTOs.ControllerPropDTOs.UserDTOs.GetUser;
+using Service.DTOs.EntityDTOs.AccountDTOs;
+using Service.Utilities.Pagination;
 using System.Linq.Expressions;
 
 namespace Service.Services.Interfaces
 {
-    public interface IAppUserService
+    public interface IUserService
     {
-        Task<List<UserDTO>> GetUsers(Expression<Func<AppUser, bool>> predicate);
-        Task<UserDTO> GetUser(Expression<Func<AppUser, bool>> predicate);
+        Task<Paginate<GetUsersDTO>> GetAll(int take, int lastPatientId, int page);
+        Task Create(CreateUserDTO createUser);
     }
 }

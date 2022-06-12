@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repository.Data;
-using Service.DTOs.AccountDTOs;
-using Service.Models;
+using Service.DTOs.ControllerPropDTOs.AccountDTOs;
 using Service.Services.Interfaces;
 using System.Security.Claims;
 
@@ -13,23 +12,23 @@ namespace Api.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<AppUser> _signInManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IEmailService _emailService;
         private readonly IAccountService _accountService;
-        private readonly IRoleClaimsService _roleClaimsService;
+        //private readonly IRoleClaimsService _roleClaimsService;
         private readonly AppDbContext _context;
 
-        public AccountController(UserManager<AppUser> userManager,
+        public AccountController(UserManager<User> userManager,
                                  RoleManager<IdentityRole> roleManager,
-                                  SignInManager<AppUser> signInManager,
+                                  SignInManager<User> signInManager,
                                  ITokenService tokenService,
                                  IEmailService emailService,
                                  IAccountService accountService,
-                                 AppDbContext context,
-                                 IRoleClaimsService roleClaimsService)
+                                 AppDbContext context)
+                                 /*IRoleClaimsService roleClaimsService*/
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -38,7 +37,7 @@ namespace Api.Controllers
             _emailService = emailService;
             _accountService = accountService;
             _context = context;
-            _roleClaimsService = roleClaimsService;
+            //_roleClaimsService = roleClaimsService;
         }
 
         [HttpPost]
@@ -47,9 +46,9 @@ namespace Api.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
         {
             await _accountService.Register(registerDTO);
-            AppUser AppUser = await _userManager.FindByEmailAsync(registerDTO.Email);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(AppUser);
-            var link = Url.Action(nameof(VerifyEmail), "Account", new { userId = AppUser.Id, token = code }, Request.Scheme, Request.Host.ToString());
+            User User = await _userManager.FindByEmailAsync(registerDTO.Email);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(User);
+            var link = Url.Action(nameof(VerifyEmail), "Account", new { userId = User.Id, token = code }, Request.Scheme, Request.Host.ToString());
             await _emailService.RegisterEmail(registerDTO, link);
             return Ok();
         }
@@ -61,7 +60,7 @@ namespace Api.Controllers
         {
             if (userId == null || token == null) return BadRequest();
 
-            AppUser user = await _userManager.FindByIdAsync(userId);
+            User user = await _userManager.FindByIdAsync(userId);
 
             if (user is null) return BadRequest();
 
@@ -80,7 +79,7 @@ namespace Api.Controllers
             var user = await _userManager.FindByEmailAsync(loginDTO.Email);
             if (user is null) return NotFound();
             if (!await _userManager.CheckPasswordAsync(user, loginDTO.Password)) return Unauthorized();
-            var accessToken = _accountService.Login(user);
+            var accessToken = await _accountService.Login(user);
 
             return Ok(accessToken);
         }
@@ -109,23 +108,6 @@ namespace Api.Controllers
             if (currentUser is null) return NotFound();
 
             return Ok(currentUser);
-        }
-
-        [HttpPost]
-        [Route("create-role")]
-        public async Task<IActionResult> CreateRole([FromQuery] string role)
-        {
-            await _roleManager.CreateAsync(new IdentityRole { Name = role });
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("Logout")]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return Ok();
-
         }
     }
 }

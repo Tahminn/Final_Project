@@ -1,9 +1,11 @@
 ﻿using Domain.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
     public class Payment : BaseEntity
     {
+        [Required]
         public Patient Patient { get; set; }
         //public int PatientId { get; set; }
         public int SubTotal { get; set; }

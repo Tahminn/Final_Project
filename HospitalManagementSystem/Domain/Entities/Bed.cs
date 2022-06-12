@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
@@ -6,6 +7,7 @@ namespace Domain.Entities
     {
         public int RoomNumber { get; set; }
         public bool IsEmpty { get; set; }
+        [Required]
         public Patient Patient { get; set; }
         //public int PatientId { get; set; }
         public DateTime AllocatedTime { get; set; }

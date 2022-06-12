@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Service.Constants;
+using Service.DTOs.ControllerPropDTOs.AccountDTOs;
 using Service.Helpers;
-using Service.Models;
 using Service.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,10 +23,7 @@ namespace Service.Services.AccountServices
         {
             var model = new PermissionDTO();
             var allPermissions = new List<RoleClaimsDTO>();
-            allPermissions.GetPermissions(typeof(Permissions.Patients), roleId);
-            allPermissions.GetPermissions(typeof(Permissions.Doctors), roleId);
-            allPermissions.GetPermissions(typeof(Permissions.Nurses), roleId);
-            allPermissions.GetPermissions(typeof(Permissions.Receptionists), roleId);
+            allPermissions.GetPermissions(typeof(PolicyTypes.Patients), roleId);
             var role = await _roleManager.FindByIdAsync(roleId);
             model.RoleId = roleId;
             var claims = await _roleManager.GetClaimsAsync(role);

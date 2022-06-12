@@ -1,4 +1,4 @@
-﻿namespace LessonMigration.Utilities.Pagination
+﻿namespace Service.Utilities.Pagination
 {
     public class Paginate<T>
     {

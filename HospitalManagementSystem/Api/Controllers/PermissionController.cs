@@ -2,16 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Service.Constants;
+using Service.DTOs.ControllerPropDTOs.AccountDTOs;
 using Service.Helpers;
-using Service.Models;
 using Service.Services.Interfaces;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     [Authorize(Roles = "SuperAdmin")]
-    public class PermissionController : ControllerBase
+    public class PermissionController : BaseController
     {
         private readonly IRoleClaimsService _roleClaimsService;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -24,8 +22,8 @@ namespace Api.Controllers
         }
 
         [Route("get-permissions")]
-        [HttpGet]
-        public async Task<ActionResult> Index(string roleId)
+        [HttpPost]
+        public async Task<ActionResult> Index([FromBody] string roleId)
         {
             var roleClaims = await _roleClaimsService.GetRoleClaims(roleId);
             return Ok(roleClaims);
@@ -33,7 +31,7 @@ namespace Api.Controllers
 
         [Route("update-permissions")]
         [HttpPost]
-        public async Task<IActionResult> Update(PermissionDTO model)
+        public async Task<IActionResult> Update([FromBody] PermissionDTO model)
         {
             var role = await _roleManager.FindByIdAsync(model.RoleId);
             var claims = await _roleManager.GetClaimsAsync(role);

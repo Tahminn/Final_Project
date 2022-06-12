@@ -7,10 +7,11 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
-        public int MyProperty { get; set; }
+        public int GenderId { get; set; }
         public Gender Gender { get; set; }
         //public int GenderId { get; set; }
         public ICollection<PatientBill> PatientBills { get; set; }
+        public ICollection<UserPatient> UserPatients { get; set; }
         public ICollection<PatientTest> PatientTests { get; set; }
         public ICollection<PatientTriage> PatientTriages { get; set; }
         public ICollection<Payment> Payments { get; set; }

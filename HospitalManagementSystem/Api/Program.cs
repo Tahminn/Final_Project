@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Repository;
 using Repository.Data;
 using Service;
+using Service.Constants;
 using Service.Mapping;
 using Service.Seeds;
 using Swashbuckle.AspNetCore.Filters;
@@ -35,7 +36,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddIdentity<AppUser, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
                .AddEntityFrameworkStores<AppDbContext>()
                .AddDefaultTokenProviders();
 
@@ -82,6 +83,18 @@ builder.Services
 
 #endregion
 
+#region AddAuthorization
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(PolicyTypes.Patients.Create, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Patients.Create); });
+    options.AddPolicy(PolicyTypes.Patients.View, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Patients.View); });
+    options.AddPolicy(PolicyTypes.Patients.Edit, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Patients.Edit); });
+    options.AddPolicy(PolicyTypes.Patients.Delete, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Patients.Delete); });
+});
+
+#endregion
+
 #region Connection String  
 builder.Services.AddDbContext<AppDbContext>(options => options
                     .UseSqlServer(builder.Configuration
@@ -125,7 +138,7 @@ using (var scope = app.Services.CreateScope())
     var logger = loggerFactory.CreateLogger("app");
     try
     {
-        var userManager = services.GetRequiredService<UserManager<AppUser>>();
+        var userManager = services.GetRequiredService<UserManager<User>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         await DefaultRoles.SeedAsync(userManager, roleManager);
         await DefaultUsers.SeedSuperAdminAsync(userManager, roleManager);

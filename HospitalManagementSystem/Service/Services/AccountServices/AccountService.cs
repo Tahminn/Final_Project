@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Service.DTOs.AccountDTOs;
+using Service.DTOs.ControllerPropDTOs.AccountDTOs;
 using Service.Services.Interfaces;
 using System.Security.Claims;
 
@@ -9,12 +9,12 @@ namespace Service.Services.AccountServices
 {
     public class AccountService : IAccountService
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountService(UserManager<AppUser> userManager,
+        public AccountService(UserManager<User> userManager,
                               IMapper mapper,
                               RoleManager<IdentityRole> roleManager,
                               ITokenService tokenService)
@@ -27,12 +27,12 @@ namespace Service.Services.AccountServices
 
         public async Task Register(RegisterDTO registerDTO)
         {
-            var user = _mapper.Map<AppUser>(registerDTO);
+            var user = _mapper.Map<User>(registerDTO);
             await _userManager.CreateAsync(user, registerDTO.Password);
             await _userManager.AddToRoleAsync(user, "Member");
         }
 
-        public async Task<string> Login(AppUser user)
+        public async Task<string> Login(User user)
         {
             IList<string> roles = await _userManager.GetRolesAsync(user);
 
@@ -44,16 +44,18 @@ namespace Service.Services.AccountServices
                 identityRoles.Add(identityRole);
             }
 
-            List<IList<Claim>> roleClaims = new();
+            List<Claim> roleClaims = new();
 
             foreach (var identityRole in identityRoles)
             {
-                var claim = await _roleManager.GetClaimsAsync(identityRole);
-
-                roleClaims.Add(claim);
+                var claims = await _roleManager.GetClaimsAsync(identityRole);
+                foreach (var claim in claims)
+                {
+                    roleClaims.Add(claim);
+                }
             }
 
-            string accessToken = _tokenService.GenerateJwtToken(user.UserName, user.Name, user.Surname, 20, (List<string>)roles, roleClaims);
+            var accessToken = await _tokenService.GenerateJwtToken(user, roleClaims);
 
             return accessToken;
         }

@@ -1,9 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Repository.Data;
-using Repository.Helpers;
 using Repository.Repositories.Interfaces;
-using System.Linq.Expressions;
 
 namespace Repository.Repositories.PatientRepos
 {
@@ -18,88 +16,83 @@ namespace Repository.Repositories.PatientRepos
             _context = context;
             entities = _context.Set<Patient>();
         }
-        //public async new Task<IEnumerable<Patient>> FindAllAsync(Expression<Func<Patient, bool>> predicate)
-        //{
-        //    if (predicate is null)
-        //    {
-        //        return await entities
-        //            .Include(t => t.Gender)
-        //            .Include(t => t.PatientBills)
-        //            .Include(t => t.PatientTests)
-        //            .Include(t => t.PatientTriages)
-        //            .ThenInclude(t => t.Triage)
-        //            .Include(t => t.Payments)
-        //            .OrderByDescending(t => t.Id)
-        //            .ToListAsync();
-        //    }
-        //    else
-        //    {
-        //        return await entities
-        //            .Where(predicate)
-        //            .Include(t => t.Gender)
-        //            .Include(t => t.PatientBills)
-        //            .Include(t => t.PatientTests)
-        //            .Include(t => t.PatientTriages)
-        //            .ThenInclude(t => t.Triage)
-        //            .Include(t => t.Payments)
-        //            .OrderByDescending(t => t.Id)
-        //            .ToListAsync();
 
-        //            //int totalPage = PageCount.Ge    tPageCount(count, take);
-        //            //Paginate<TeacherListVM> paginatedTeacher = new Paginate<TeacherListVM>(teachersVM, page, totalPage);
-        //    }
-        //}
-
-        public async Task<List<Patient>> GetAllAsync(int? appUserId, int take, int lastPatientId)
+        public async Task<Patient> GetById(int id)
         {
             try
             {
-                if (appUserId != null)
-                {
-                    List<Patient> patients = await _context.Patients
-                        .Where(t => t.Id < lastPatientId && t.PatientTests.)
-                        .Include(t => t.Gender)
-                        .Include(t => t.PatientBills)
-                        .Include(t => t.PatientTests)
-                        .Include(t => t.PatientTriages)
-                        .ThenInclude(t => t.Triage)
-                        .Include(t => t.Payments)
-                        .OrderByDescending(t => t.Id)
-                        .Take(take)
-                        .ToListAsync();
-                }
-                else
-                {
-                    List<Patient> patients = await _context.Patients
-                        .Where(t => t.Id < lastPatientId)
-                        .Include(t => t.Gender)
-                        .Include(t => t.PatientBills)
-                        .Include(t => t.PatientTests)
-                        .Include(t => t.PatientTriages)
-                        .ThenInclude(t => t.Triage)
-                        .Include(t => t.Payments)
-                        .OrderByDescending(t => t.Id)
-                        .Take(take)
-                        .ToListAsync();
-                }
-
-                
-
-                if (take > 0) teachers = teachers.Take(take).ToList();
-                var teachersVM = GetMapDatas(teachers);
-                
-                return paginatedTeacher;
+                return await entities
+                    .Include(t => t.Gender)
+                    .Include(t => t.PatientBills)
+                    .Include(t => t.PatientTests)
+                    .Include(t => t.PatientTriages)
+                    .ThenInclude(t => t.Triage)
+                    .Include(t => t.Payments)
+                    .Include(t => t.UserPatients)
+                    .ThenInclude(t => t.User)
+                    .FirstOrDefaultAsync(x => x.Id == id);
             }
             catch (Exception)
             {
                 throw;
             }
-            //var patients = await _patientRepo.FindAllAsync(null);
-
-            //var patientDTO = _mapper.Map<List<PatientDTO>>(patients);
-
-            //return patientDTO;
         }
 
+        public async Task Delete(int id)
+        {
+            try
+            {
+                var patient = await entities
+                    .Include(t => t.Gender)
+                    .Include(t => t.PatientBills)
+                    .Include(t => t.PatientTests)
+                    .Include(t => t.PatientTriages)
+                    .ThenInclude(t => t.Triage)
+                    .Include(t => t.Payments)
+                    .Include(t => t.UserPatients)
+                    .FirstOrDefaultAsync(x => x.Id == id);
+
+                entities.Remove(patient);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task Create(Patient patient/*, ICollection<PatientTriage> patientTriages*/)
+        {
+            try
+            {
+                entities.Add(patient);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task Put(Patient patient/*, ICollection<PatientTriage> patientTriages*/)
+        {
+            try
+            {
+                var patientTriag = await _context.PatientTriage.AsNoTracking().FirstOrDefaultAsync(m => m.PatientId == patient.Id);
+
+                patient.PatientTriages.FirstOrDefault().Id = patientTriag.Id;
+
+                _context.PatientTriage.Update(patient.PatientTriages.FirstOrDefault());
+                //var currentPatient = await entities.FirstOrDefaultAsync(e => e.Id == id);
+                entities.Update(patient);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

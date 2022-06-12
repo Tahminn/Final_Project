@@ -1,11 +1,15 @@
 ﻿using Domain.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
     public class PatientTriage : BaseEntity
     {
+        public int PatientId { get; set; }
+        [Required]
         public Patient Patient { get; set; }
         //public int PatientId { get; set; }
+        public int TriageId { get; set; }
         public Triage Triage { get; set; }
         //public int TriageId { get; set; }
         public string BloodPressure { get; set; }

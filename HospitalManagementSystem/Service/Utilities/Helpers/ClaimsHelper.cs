@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Service.Models;
+using Service.DTOs.ControllerPropDTOs.AccountDTOs;
 using System.Reflection;
 using System.Security.Claims;
 

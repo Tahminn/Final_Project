@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Repository.Data;
 using Service.Constants;
+using Service.DTOs.ControllerPropDTOs.PatientDTOs;
+using Service.DTOs.ControllerPropDTOs.PatientDTOs.CreatePatients;
+using Service.DTOs.ControllerPropDTOs.PatientDTOs.PutPatients;
 using Service.Services.Interfaces;
 
 namespace Api.Controllers
@@ -10,100 +16,85 @@ namespace Api.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IPatientService _patientService;
-        private readonly IAuthorizationService _authorizationService;
+        private readonly UserManager<User> _userManager;
 
         public PatientsController(AppDbContext context,
                                   IPatientService patientService,
-                                  IAuthorizationService authorizationService)
+                                  UserManager<User> userManager)
         {
             _context = context;
             _patientService = patientService;
-            _authorizationService = authorizationService;
+            _userManager = userManager;
+        }
+
+        [Route("create")]
+        [HttpPost]
+        [Authorize(Policy = PolicyTypes.Patients.Create)]
+        public async Task<IActionResult> Create([FromBody]CreatePatientsDTO createPatients)
+        {
+            if (createPatients == null)
+            {
+                return NotFound();
+            }
+
+            await _patientService.Create(createPatients);
+
+            return Ok();
         }
 
         [Route("get-all")]
-        [HttpGet]
-        public async Task<IActionResult> GetPatients()
+        [HttpPost]
+        [Authorize(Policy = PolicyTypes.Patients.View)]
+        public async Task<IActionResult> GetPatients([FromBody] GetPatientsDTO patientsDTO)
         {
-            if (!_authorizationService.AuthorizeAsync(User, Permissions.Patients.View).Result.Succeeded) return Unauthorized();
+            var paginatedPatients = await _patientService.GetAll(patientsDTO.UserId, patientsDTO.Take, patientsDTO.LastPatientId, patientsDTO.Page);
 
-            return Ok(await _patientService.GetPatients());
+            if (paginatedPatients == null) return NotFound();
+
+            return Ok(paginatedPatients);
         }
 
-//        // GET: api/Patients/{id}
-//        [HttpGet("{id}")]
-//        [Route("GetPatient/{id}")]
-//        public async Task<ActionResult<Patient>> GetPatient(int id)
-//        {
-//            var patient = await _context.Patients.FindAsync(id);
+        [Route("get/{id}")]
+        [HttpPost]
+        [Authorize(Policy = PolicyTypes.Patients.View)]
+        public async Task<IActionResult> GetPatientById(int id)
+        {
+            var patient = await _patientService.GetById(id);
 
-//            if (patient == null)
-//            {
-//                return NotFound();
-//            }
+            if (patient == null)
+            {
+                return NotFound();
+            }
 
-//            return patient;
-//        }
+            return Ok(patient);
+        }
 
-//        // PUT: api/Patients/{id}
-//        [HttpPut("{id}")]
-//        public async Task<IActionResult> PutPatient(int id, Patient patient)
-//        {
-//            if (id != patient.Id)
-//            {
-//                return BadRequest();
-//            }
+        [HttpPut]
+        [Route("put")]
+        [Authorize(Policy = PolicyTypes.Patients.Edit)]
+        public async Task<IActionResult> Put([FromBody] PutPatientsDTO putPatientsDTO)
+        {
 
-//            _context.Entry(patient).State = EntityState.Modified;
+            if (putPatientsDTO == null)
+            {
+                return NotFound();
+            }
 
-//            try
-//            {
-//                await _context.SaveChangesAsync();
-//            }
-//            catch (DbUpdateConcurrencyException)
-//            {
-//                if (!PatientExists(id))
-//                {
-//                    return NotFound();
-//                }
-//                else
-//                {
-//                    throw;
-//                }
-//            }
+            await _patientService.Put(putPatientsDTO);
 
-//            return NoContent();
-//        }
+            return Ok();
+        }
 
-//        // POST: api/Patients
-//        [HttpPost]
-//        public async Task<ActionResult<Patient>> PostPatient(Patient patient)
-//        {
-//            _context.Patients.Add(patient);
-//            await _context.SaveChangesAsync();
+        [HttpDelete]
+        [Route("delete/{id}")]
+        [Authorize(Policy = PolicyTypes.Patients.Delete)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id == 0) return BadRequest();
 
-//            return CreatedAtAction("GetPatient", new { id = patient.Id }, patient);
-//        }
+            await _patientService.Delete(id);
 
-//        // DELETE: api/Patients/{id}
-//        [HttpDelete("{id}")]
-//        public async Task<IActionResult> DeletePatient(int id)
-//        {
-//            var patient = await _context.Patients.FindAsync(id);
-//            if (patient == null)
-//            {
-//                return NotFound();
-//            }
-
-//            _context.Patients.Remove(patient);
-//            await _context.SaveChangesAsync();
-
-//            return NoContent();
-//        }
-
-//        private bool PatientExists(int id)
-//        {
-//            return _context.Patients.Any(e => e.Id == id);
-//        }
+            return Ok();
+        }
     }
 }

@@ -13,7 +13,33 @@ namespace Repository
 
             services.AddScoped<IPatientRepo, PatientRepo>();
 
-            services.AddScoped<IAppUserRepo, AppUserRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
+
+            services.AddScoped<IUserPatientRepo, UserPatientRepo>();
+
+            services.AddScoped<IPatientRepo, PatientRepo>();
+
+            services.AddScoped<ISettingRepo, SettingRepo>();
+
+            services.AddScoped<IBedRepo, BedRepo>();
+            
+            services.AddScoped<IBirthRepo, BirthRepo>();
+            
+            services.AddScoped<IDepartmentRepo, DepartmentRepo>();
+            
+            services.AddScoped<IGenderRepo, GenderRepo>();
+            
+            services.AddScoped<IOperationRepo, OperationRepo>();
+            
+            services.AddScoped<IPatientBillRepo, PatientBillRepo>();
+            
+            services.AddScoped<IPatientRepo, PatientRepo>();
+            
+            services.AddScoped<IPatientTestRepo, PatientTestRepo>();
+            
+            services.AddScoped<IPatientTriageRepo, PatientTriageRepo>();
+            
+            services.AddScoped<ITriageRepo, TriageRepo>();
 
             return services;
         }

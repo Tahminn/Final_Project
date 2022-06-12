@@ -1,4 +1,4 @@
-﻿using Service.DTOs.AccountDTOs;
+﻿using Service.DTOs.ControllerPropDTOs.AccountDTOs;
 
 namespace Service.Services.Interfaces
 {

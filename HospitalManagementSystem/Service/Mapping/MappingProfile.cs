@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 using Service.DTOs;
-using Service.DTOs.AccountDTOs;
-using Service.DTOs.PatientDTOs;
+using Service.DTOs.ControllerPropDTOs.AccountDTOs;
+using Service.DTOs.ControllerPropDTOs.PatientDTOs;
+using Service.DTOs.ControllerPropDTOs.PatientDTOs.CreatePatients;
+using Service.DTOs.ControllerPropDTOs.PatientDTOs.PutPatients;
+using Service.DTOs.ControllerPropDTOs.UserDTOs;
+using Service.DTOs.EntityDTOs.AccountDTOs;
+using Service.DTOs.EntityDTOs.PatientDTOs;
 
 namespace Service.Mapping
 {
@@ -12,11 +17,11 @@ namespace Service.Mapping
         {
             #region UserEntityMapping
 
-            //CreateMap<RegisterDTO, AppUser>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
+            //CreateMap<RegisterDTO, User>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
 
-            CreateMap<AppUser, UserDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
 
-            CreateMap<AppUser, RegisterDTO>().ReverseMap();
+            CreateMap<User, RegisterDTO>().ReverseMap();
 
             CreateMap<Gender, GenderDTO>().ReverseMap();
 
@@ -31,6 +36,18 @@ namespace Service.Mapping
             CreateMap<Payment, PaymentDTO>().ReverseMap();
             
             CreateMap<Triage, TriageDTO>().ReverseMap();
+
+            CreateMap<UserPatient, UserPatientDTO>().ReverseMap();
+
+            CreateMap<Patient, CreatePatientsDTO>().ReverseMap();
+
+            CreateMap<PatientTriage, CreatePatientTriageDTO>().ReverseMap();
+
+            CreateMap<Patient, PutPatientsDTO>().ReverseMap();
+
+            CreateMap<PatientTriage, PutPatientTriageDTO>().ReverseMap();
+
+            CreateMap<User, CreateUserDTO>().ReverseMap();
 
             #endregion
         }

@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     [Authorize(Roles = "SuperAdmin")]
-    public class RolesController : ControllerBase
+    public class RolesController : BaseController
     {
         private readonly RoleManager<IdentityRole> _roleManager;
 
@@ -18,7 +16,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetRoles")]
+        [Route("get-all")]
         public async Task<IActionResult> Index()
         {
             var roles = await _roleManager.Roles.ToListAsync();
@@ -26,9 +24,9 @@ namespace Api.Controllers
             return Ok(roles);
         }
 
-        [Route("AddRoles")]
+        [Route("add")]
         [HttpPost]
-        public async Task<IActionResult> AddRole(string roleName)
+        public async Task<IActionResult> AddRole([FromBody]string roleName)
         {
             if (roleName == null) return BadRequest(string.Empty);
 
