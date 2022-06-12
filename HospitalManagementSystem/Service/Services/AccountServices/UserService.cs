@@ -49,7 +49,7 @@ namespace Service.Services
 
         public async Task<Paginate<GetUsersDTO>> GetAll(int take, int lastPatientId, int page)
         {
-            /////Userler uchun pagination i skip take nen yaz
+            /////Userler uchun pagination i skip take nen yazz
 
             List<User> patients = await _userRepo.GetAllAsync(take, lastPatientId);
             var patientDTO = _mapper.Map<List<GetUsersDTO>>(patients);
