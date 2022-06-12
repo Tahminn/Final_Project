@@ -1,0 +1,5 @@
+{
+    "serverName" : "https://localhost:7164",
+    "serverNameForAccount" : "https://localhost:7164/api/Account",
+    "serverNameForPatients" : "https://localhost:7164/api/Patients"
+}
