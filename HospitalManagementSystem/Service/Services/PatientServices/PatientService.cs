@@ -66,7 +66,7 @@ namespace Service.Services.PatientServices
             return patientDTO;
         }
 
-        public async Task Put(PutPatientsDTO putPatientsDTO)
+        public async Task Put(int id, PutPatientsDTO putPatientsDTO)
         {
             foreach (var patientTriages in putPatientsDTO.PatientTriages)
             {
@@ -74,7 +74,7 @@ namespace Service.Services.PatientServices
             }
             var patient = _mapper.Map<Patient>(putPatientsDTO);
 
-            //var patientTriage = _mapper.Map<ICollection<PatientTriage>>(putPatientsDTO.PatientTriages);
+            patient.Id = id;
 
             await _patientRepo.Put(patient/*, patientTriage*/);
         }

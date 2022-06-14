@@ -11,7 +11,7 @@ namespace Service.Services.Interfaces
         Task Create(CreatePatientsDTO createPatients);
         Task<Paginate<UserPatientDTO>> GetAll(string userId, int take, int lastPatientId, int page);
         Task<PatientDTO> GetById(int id);
-        Task Put(PutPatientsDTO putPatientsDTO);
+        Task Put(int id, PutPatientsDTO putPatientsDTO);
         Task Delete(int id);
     }
 }

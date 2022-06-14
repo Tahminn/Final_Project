@@ -13,7 +13,24 @@ const Profile = () => {
 
   console.log(userr);
   return (
-    <div className="page-content">
+    <>
+      <div className="row">
+        <div className="col-12 col">
+          <div className="page-title-box d-flex align-items-start align-items-center justify-content-between">
+            <h4 className="page-title mb-0 font-size-18">Profile</h4>
+            <div className="page-title-right">
+              {/* <ol className="breadcrumb m-0">
+                <li className="breadcrumb-item">
+                  <a href="/dashboard2">Dashboard</a>
+                </li>
+                <li className="active breadcrumb-item" aria-current="page">
+                  <a href="/dashboard2">Dashboard 2</a>
+                </li>
+              </ol> */}
+            </div>
+           </div>
+        </div>
+      </div>
       <div className="row">
         <div className="col-12">
           <div className="page-title-box d-flex align-items-center justify-content-between">
@@ -40,8 +57,8 @@ const Profile = () => {
                     <p className="mb-1">{userr.given_name}</p>
                     <p className="mb-0">{userr.given_name}</p>
                     <ul>
-                      {userr.sid.map((userrSid, i) => {
-                        return <li>{userrSid}</li>
+                      {userr.Permission.map((userrSid, i) => {
+                        return <li key={i}>{userrSid}</li>
                       })}
                     </ul>
                   </div>
@@ -51,8 +68,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </div>
-
+    </>
   );
 };
 export default Profile;

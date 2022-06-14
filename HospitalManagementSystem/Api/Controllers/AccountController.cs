@@ -18,6 +18,7 @@ namespace Api.Controllers
         private readonly ITokenService _tokenService;
         private readonly IEmailService _emailService;
         private readonly IAccountService _accountService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         //private readonly IRoleClaimsService _roleClaimsService;
         private readonly AppDbContext _context;
 
@@ -27,8 +28,9 @@ namespace Api.Controllers
                                  ITokenService tokenService,
                                  IEmailService emailService,
                                  IAccountService accountService,
-                                 AppDbContext context)
-                                 /*IRoleClaimsService roleClaimsService*/
+                                 AppDbContext context,
+                                 IHttpContextAccessor httpContextAccessor)
+                               /*IRoleClaimsService roleClaimsService*/
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -37,6 +39,7 @@ namespace Api.Controllers
             _emailService = emailService;
             _accountService = accountService;
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
             //_roleClaimsService = roleClaimsService;
         }
 
@@ -45,12 +48,12 @@ namespace Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
         {
-            await _accountService.Register(registerDTO);
+            var result = await _accountService.Register(registerDTO);
             User User = await _userManager.FindByEmailAsync(registerDTO.Email);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(User);
             var link = Url.Action(nameof(VerifyEmail), "Account", new { userId = User.Id, token = code }, Request.Scheme, Request.Host.ToString());
             await _emailService.RegisterEmail(registerDTO, link);
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet]
@@ -66,7 +69,7 @@ namespace Api.Controllers
 
             await _userManager.ConfirmEmailAsync(user, token);
 
-            await _signInManager.SignInAsync(user, false);
+            //await _signInManager.SignInAsync(user, false);
 
             return Ok();
         }
@@ -103,11 +106,13 @@ namespace Api.Controllers
         [Route("current-user")]
         public async Task<IActionResult> CurrentUser()
         {
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var email = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
 
-            if (currentUser is null) return NotFound();
+            var user = await _userManager.FindByEmailAsync(email);
 
-            return Ok(currentUser);
+            if (user is null) return NotFound();
+
+            return Ok(user);
         }
     }
 }

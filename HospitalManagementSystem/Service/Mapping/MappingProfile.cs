@@ -6,6 +6,8 @@ using Service.DTOs.ControllerPropDTOs.PatientDTOs;
 using Service.DTOs.ControllerPropDTOs.PatientDTOs.CreatePatients;
 using Service.DTOs.ControllerPropDTOs.PatientDTOs.PutPatients;
 using Service.DTOs.ControllerPropDTOs.UserDTOs;
+using Service.DTOs.ControllerPropDTOs.UserDTOs.GetUser;
+using Service.DTOs.ControllerPropDTOs.UserDTOs.PutUser;
 using Service.DTOs.EntityDTOs.AccountDTOs;
 using Service.DTOs.EntityDTOs.PatientDTOs;
 
@@ -48,6 +50,20 @@ namespace Service.Mapping
             CreateMap<PatientTriage, PutPatientTriageDTO>().ReverseMap();
 
             CreateMap<User, CreateUserDTO>().ReverseMap();
+
+            CreateMap<User, GetUsersDTO>().ReverseMap();
+
+            CreateMap<Gender, GetGenderDTO>().ReverseMap();
+
+            CreateMap<Occupation, GetOccupationDTO>().ReverseMap();
+
+            CreateMap<Department, GetDepartmentDTO>().ReverseMap();
+
+            CreateMap<PutUserDTO, User>()
+                .ForMember(u => u.NormalizedEmail, opt => opt.MapFrom(pu => pu.Email.ToString().ToUpper()))
+                .ForMember(u => u.NormalizedUserName, opt => opt.MapFrom(pu => pu.UserName.ToString().ToUpper()));
+
+            CreateMap<User, PutUserDTO>();
 
             #endregion
         }

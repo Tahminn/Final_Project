@@ -13,7 +13,9 @@ namespace Api.Controllers
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRolesController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserRolesController(UserManager<User> userManager,
+                                   SignInManager<User> signInManager,
+                                   RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

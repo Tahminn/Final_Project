@@ -11,13 +11,16 @@ namespace Repository.Repositories
     {
         private readonly AppDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly DbSet<User> entities;
         public UserRepo(AppDbContext context,
-                        UserManager<User> userManager)
+                        UserManager<User> userManager,
+                        RoleManager<IdentityRole> roleManager = null)
         {
             _context = context;
             entities = _context.Set<User>();
             _userManager = userManager;
+            _roleManager = roleManager;
         }
         public async Task CreateAsync(User entity)
         {
@@ -53,46 +56,69 @@ namespace Repository.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<User>> FindAllAsync(Expression<Func<User, bool>> predicate)
-        {
-            if (predicate is null)
-            {
-                return await entities
-                    .Include(e => e.Gender)
-                    .Include(e => e.Occupation)
-                    .Include(e => e.Department)
-                    .ToListAsync();
-            }
-            else
-            {
-                return await entities
-                    .Where(predicate)
-                    .Include(e => e.Gender)
-                    .Include(e => e.Occupation)
-                    .Include(e => e.Department)
-                    .ToListAsync();
-            }
-        }
+        //public async Task<IEnumerable<User>> FindAllAsync(Expression<Func<User, bool>> predicate)
+        //{
+        //    if (predicate is null)
+        //    {
+        //        return await entities
+        //            .Include(e => e.Gender)
+        //            .Include(e => e.Occupation)
+        //            .Include(e => e.Department)
+        //            .ToListAsync();
+        //    }
+        //    else
+        //    {
+        //        return await entities
+        //            .Where(predicate)
+        //            .Include(e => e.Gender)
+        //            .Include(e => e.Occupation)
+        //            .Include(e => e.Department)
+        //            .ToListAsync();
+        //    }
+        //}
 
-        //public async Task<List<User>> GetAllAsync(int take, int lastPatientId)
+        //public async Task<List<User>> GetAllByRoleAsync(string roleName, int take, int skip)
         //{
         //    try
         //    {
+        //        var role = await _roleManager.FindByNameAsync(roleName);
+
+        //        var user = await _userManager.Users.Where(m => m.UserRoles.Contains(role));
+
         //        List<User> user = await entities
-        //                .Where(p => p.Id < lastPatientId)
-        //                .Include(p => p.User)
-        //                .Include(p => p.Patient)
-        //                .ThenInclude(p => p.Gender)
+        //                .Where(m => m.UserRoles == role)
+        //                .Include(m => m.UserRoles)
+        //                .Include(p => p.Gender)
+        //                .Include(p => p.Department)
+        //                .Include(p => p.Occupation)
         //                .OrderByDescending(p => p.Id)
+        //                .Skip(skip)
         //                .Take(take)
         //                .ToListAsync();
 
-        //        return patients;
+        //        return user;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        ////}
+        //public async Task<int> GetCountByRoleAsync(string roleName)
+        //{
+        //    try
+        //    {
+        //        var role = await _roleManager.FindByNameAsync(roleName);
+        //        int userCount = await entities
+        //                //.Where(m => m.UserRoles == role)
+        //                .CountAsync();
+
+        //        return userCount;
         //    }
         //    catch (Exception)
         //    {
         //        throw;
         //    }
         //}
+
     }
 }

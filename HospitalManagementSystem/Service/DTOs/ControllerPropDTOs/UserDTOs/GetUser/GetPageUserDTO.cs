@@ -9,7 +9,6 @@ namespace Service.DTOs.ControllerPropDTOs.UserDTOs.GetUser
     public class GetPageUserDTO
     {
         public int Take { get; set; }
-        public int LastPatientId { get; set; }
         public int Page { get; set; }
     }
 }

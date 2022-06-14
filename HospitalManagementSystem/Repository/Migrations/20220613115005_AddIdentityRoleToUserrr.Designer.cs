@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository.Data;
 
@@ -11,9 +12,10 @@ using Repository.Data;
 namespace Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220613115005_AddIdentityRoleToUserrr")]
+    partial class AddIdentityRoleToUserrr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,16 +44,6 @@ namespace Repository.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
 
@@ -59,18 +51,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Beds", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Bed");
                 });
 
             modelBuilder.Entity("Domain.Entities.Birth", b =>
@@ -90,16 +71,6 @@ namespace Repository.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -109,18 +80,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Births", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Birth");
                 });
 
             modelBuilder.Entity("Domain.Entities.Department", b =>
@@ -134,30 +94,9 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Departments", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("Domain.Entities.Gender", b =>
@@ -171,30 +110,9 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Genders", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Gender");
                 });
 
             modelBuilder.Entity("Domain.Entities.Medicine", b =>
@@ -208,30 +126,9 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Medicine", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Medicine");
                 });
 
             modelBuilder.Entity("Domain.Entities.Occupation", b =>
@@ -245,30 +142,9 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Occupations", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Occupation");
                 });
 
             modelBuilder.Entity("Domain.Entities.Operation", b =>
@@ -288,16 +164,6 @@ namespace Repository.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -307,18 +173,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Operations", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Operation");
                 });
 
             modelBuilder.Entity("Domain.Entities.Patient", b =>
@@ -362,16 +217,6 @@ namespace Repository.Migrations
                     b.Property<string>("Passport")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -388,18 +233,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("GenderId");
 
-                    b.ToTable("Patients", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Patient");
                 });
 
             modelBuilder.Entity("Domain.Entities.PatientBill", b =>
@@ -428,16 +262,6 @@ namespace Repository.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<int>("RoomCharge")
                         .HasColumnType("int");
 
@@ -448,18 +272,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("PatientBills", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("PatientBill");
                 });
 
             modelBuilder.Entity("Domain.Entities.PatientTest", b =>
@@ -488,16 +301,6 @@ namespace Repository.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("TestResult")
                         .HasColumnType("nvarchar(max)");
 
@@ -510,18 +313,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PatientTests", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("PatientTest");
                 });
 
             modelBuilder.Entity("Domain.Entities.PatientTriage", b =>
@@ -550,16 +342,6 @@ namespace Repository.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<DateTime>("RegistrationTime")
                         .HasColumnType("datetime2");
 
@@ -578,18 +360,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("TriageId");
 
-                    b.ToTable("PatientTriages", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("PatientTriage");
                 });
 
             modelBuilder.Entity("Domain.Entities.Payment", b =>
@@ -612,16 +383,6 @@ namespace Repository.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<int>("SubTotal")
                         .HasColumnType("int");
 
@@ -635,18 +396,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Payments", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Setting", b =>
@@ -660,33 +410,12 @@ namespace Repository.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Setting");
                 });
 
             modelBuilder.Entity("Domain.Entities.Triage", b =>
@@ -700,30 +429,9 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Triages", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("Triage");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -792,16 +500,6 @@ namespace Repository.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -837,18 +535,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("OccupationId");
 
-                    b.ToTable("Users", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.UserPatient", b =>
@@ -862,16 +549,6 @@ namespace Repository.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -882,18 +559,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserPatients", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("UserPatient");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -913,16 +579,6 @@ namespace Repository.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
@@ -930,18 +586,7 @@ namespace Repository.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("Roles", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -958,16 +603,6 @@ namespace Repository.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("RoleId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -976,18 +611,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaims", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -1004,16 +628,6 @@ namespace Repository.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -1022,18 +636,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -1043,16 +646,6 @@ namespace Repository.Migrations
 
                     b.Property<string>("ProviderKey")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -1065,18 +658,7 @@ namespace Repository.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserLogins", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -1087,32 +669,16 @@ namespace Repository.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.HasIndex("UserId1");
 
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -1126,33 +692,12 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("PeriodEnd")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodEnd");
-
-                    b.Property<DateTime>("PeriodStart")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PeriodStart");
-
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", (string)null);
-
-                    b.ToTable(tb => tb.IsTemporal(ttb =>
-                        {
-                            ttb
-                                .HasPeriodStart("PeriodStart")
-                                .HasColumnName("PeriodStart");
-                            ttb
-                                .HasPeriodEnd("PeriodEnd")
-                                .HasColumnName("PeriodEnd");
-                        }
-                    ));
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Bed", b =>
@@ -1349,6 +894,10 @@ namespace Repository.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -1386,6 +935,8 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("UserPatients");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

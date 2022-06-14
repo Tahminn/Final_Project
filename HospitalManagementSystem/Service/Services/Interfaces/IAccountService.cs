@@ -5,7 +5,7 @@ namespace Service.Services.Interfaces
 {
     public interface IAccountService
     {
-        Task Register(RegisterDTO registerDTO);
+        Task<bool> Register(RegisterDTO registerDTO);
         Task<string> Login(User user);
     }
 }

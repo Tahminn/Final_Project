@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { register } from "../../store/slices/auth";
 import { clearMessage } from "../../store/slices/message";
+import { Link } from "react-router-dom";
 
 
 const Register = () => {
@@ -103,8 +104,11 @@ const Register = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                  <button type="submit" className="btn btn-primary btn-block my-3 w-100">Sign Up</button>
                 </div>
+                <Link to="/login" className="waves-effect">
+                     <span>Have an account? Go to Login</span>
+                 </Link>
               </div>
             )}
           </Form>
@@ -116,7 +120,7 @@ const Register = () => {
             className={successful ? "alert alert-success" : "alert alert-danger"}
             role="alert"
           >
-            {message}
+            {message + "Please, verify your email address before login"}
           </div>
         </div>
       )}

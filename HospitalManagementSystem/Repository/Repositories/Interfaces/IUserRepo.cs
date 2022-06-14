@@ -9,7 +9,8 @@ namespace Repository.Repositories.Interfaces
         Task UpdateAsync(User entity);
         Task DeleteAsync(User entity);
         Task<User> FindAsync(Expression<Func<User, bool>> predicate);
-        Task<IEnumerable<User>> FindAllAsync(Expression<Func<User, bool>> predicate);
-        Task<List<User>> GetAllAsync(int take, int lastPatientId);
+        //Task<IEnumerable<User>> FindAllAsync(Expression<Func<User, bool>> predicate);
+        ////Task<List<User>> GetAllByRoleAsync(string roleName, int take, int skip);
+        //Task<int> GetCountByRoleAsync(string roleName);
     }
 }

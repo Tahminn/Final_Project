@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,16 +14,16 @@ using Service.Services.Interfaces;
 
 namespace Api.Controllers
 {
-    public class DoctorsController : BaseController
+    public class ReceptionistsController : BaseController
     {
         private readonly AppDbContext _context;
         private readonly IPatientService _patientService;
         private readonly IUserService _userService;
         private readonly IAccountService _accountService;
         private readonly UserManager<User> _userManager;
-        private string roleName = "Doctor";
+        private string roleName = "Receptionist";
 
-        public DoctorsController(AppDbContext context,
+        public ReceptionistsController(AppDbContext context,
                                   IPatientService patientService,
                                   UserManager<User> userManager,
                                   IUserService userService,
@@ -37,7 +38,7 @@ namespace Api.Controllers
 
         [Route("create")]
         [HttpPost]
-        //[Authorize(Policy = PolicyTypes.Doctors.Create)]
+        //[Authorize(Policy = PolicyTypes.Receptionists.Create)]
         public async Task<IActionResult> Create([FromBody] CreateUserDTO createUser)
         {
             await _userService.Create(createUser);
@@ -46,8 +47,8 @@ namespace Api.Controllers
 
         [Route("get-all")]
         [HttpPost]
-        //[Authorize(Policy = PolicyTypes.Doctors.View)]
-        public async Task<IActionResult> GetAll ([FromBody] GetPageUserDTO getPageUserDTO)
+        //[Authorize(Policy = PolicyTypes.Receptionists.View)]
+        public async Task<IActionResult> GetAll([FromBody] GetPageUserDTO getPageUserDTO)
         {
             var paginatedUsers = await _userService.GetAll(roleName, getPageUserDTO.Take, getPageUserDTO.Page);
 
@@ -58,8 +59,8 @@ namespace Api.Controllers
 
         [Route("get/{id}")]
         [HttpPost]
-        //[Authorize(Policy = PolicyTypes.Doctors.View)]
-        public async Task<IActionResult> GetById([FromRoute]string id)
+        //[Authorize(Policy = PolicyTypes.Receptionists.View)]
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
             var user = await _userService.GetByUserName(id);
 
@@ -73,8 +74,8 @@ namespace Api.Controllers
 
         [HttpPut]
         [Route("put/{id}")]
-        //[Authorize(Policy = PolicyTypes.Doctors.Edit)]
-        public async Task<IActionResult> Put([FromRoute]string id, [FromBody]PutUserDTO putUserDTO)
+        //[Authorize(Policy = PolicyTypes.Receptionists.Edit)]
+        public async Task<IActionResult> Put([FromRoute] string id, [FromBody] PutUserDTO putUserDTO)
         {
 
             if (putUserDTO == null)

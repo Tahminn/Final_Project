@@ -45,7 +45,7 @@ namespace Api.Controllers
         [Route("get-all")]
         [HttpPost]
         [Authorize(Policy = PolicyTypes.Patients.View)]
-        public async Task<IActionResult> GetPatients([FromBody] GetPatientsDTO patientsDTO)
+        public async Task<IActionResult> GetAll([FromBody] GetPatientsDTO patientsDTO)
         {
             var paginatedPatients = await _patientService.GetAll(patientsDTO.UserId, patientsDTO.Take, patientsDTO.LastPatientId, patientsDTO.Page);
 
@@ -57,7 +57,7 @@ namespace Api.Controllers
         [Route("get/{id}")]
         [HttpPost]
         [Authorize(Policy = PolicyTypes.Patients.View)]
-        public async Task<IActionResult> GetPatientById(int id)
+        public async Task<IActionResult> GetById([FromRoute]int id)
         {
             var patient = await _patientService.GetById(id);
 
@@ -70,9 +70,9 @@ namespace Api.Controllers
         }
 
         [HttpPut]
-        [Route("put")]
+        [Route("put/{id}")]
         [Authorize(Policy = PolicyTypes.Patients.Edit)]
-        public async Task<IActionResult> Put([FromBody] PutPatientsDTO putPatientsDTO)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] PutPatientsDTO putPatientsDTO)
         {
 
             if (putPatientsDTO == null)
@@ -80,7 +80,7 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            await _patientService.Put(putPatientsDTO);
+            await _patientService.Put(id,putPatientsDTO);
 
             return Ok();
         }
@@ -88,7 +88,7 @@ namespace Api.Controllers
         [HttpDelete]
         [Route("delete/{id}")]
         [Authorize(Policy = PolicyTypes.Patients.Delete)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute]int id)
         {
             if (id == 0) return BadRequest();
 

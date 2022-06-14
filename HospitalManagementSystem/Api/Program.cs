@@ -96,12 +96,13 @@ builder.Services.AddAuthorization(options =>
 #endregion
 
 #region Connection String  
-builder.Services.AddDbContext<AppDbContext>(options => options
-                    .UseSqlServer(builder.Configuration
-                    .GetConnectionString("DefaultConnection")));
+builder.Services.AddSqlServer<AppDbContext>(
+                    builder.Configuration.GetConnectionString("DefaultConnection"));
 #endregion
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddRepositories();
 

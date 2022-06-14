@@ -10,15 +10,16 @@ const register = (username, email, password) => {
 };
 const login = (email, password) => {
   return axios
-    .post(`${serverApi.serverNameForAccount}/Login`, {
+    .post(`${serverApi.serverNameForAccount}/login`, {
       email,
       password,
     })
     .then((response) => {
-      if (response.data.result) {
-        localStorage.setItem("user", JSON.stringify(response.data.result));
+      if (response.data) {
+        console.log(response.data)
+        localStorage.setItem("user", JSON.stringify(response.data));
       }
-      return response.data.result;
+      return response.data;
     });
 };
 const logout = () => {

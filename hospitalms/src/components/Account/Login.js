@@ -1,6 +1,6 @@
 import React, { useState, useEffect  } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { login } from "../../store/slices/auth";
@@ -72,7 +72,7 @@ const Login = (props) => {
               />
             </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+              <button type="submit" className="btn btn-primary btn-block my-3 w-100" disabled={loading}>
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
@@ -81,6 +81,9 @@ const Login = (props) => {
             </div>
           </Form>
         </Formik>
+        <Link to="/register" className="waves-effect">
+            <span>Have you registered yet? Go to login</span>
+      </Link>
       </div>
       {message && (
         <div className="form-group">
@@ -89,6 +92,7 @@ const Login = (props) => {
           </div>
         </div>
       )}
+      
     </div>
   );
 };

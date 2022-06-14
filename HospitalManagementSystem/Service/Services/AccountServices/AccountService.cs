@@ -25,11 +25,12 @@ namespace Service.Services.AccountServices
             _tokenService = tokenService;
         }
 
-        public async Task Register(RegisterDTO registerDTO)
+        public async Task<bool> Register(RegisterDTO registerDTO)
         {
             var user = _mapper.Map<User>(registerDTO);
             await _userManager.CreateAsync(user, registerDTO.Password);
-            await _userManager.AddToRoleAsync(user, "Member");
+            var result = await _userManager.AddToRoleAsync(user, "Member");
+            return result.Succeeded;
         }
 
         public async Task<string> Login(User user)

@@ -41,7 +41,9 @@ function Layout() {
           // isMobile={this.state.isMobile}
           />
           <div className="main-content">
-              <Outlet/>
+            <div className="page-content">              
+            <Outlet/>
+            </div>
           </div>
         </div>
       </div>

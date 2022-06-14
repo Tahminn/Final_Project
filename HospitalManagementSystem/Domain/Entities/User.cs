@@ -25,5 +25,6 @@ namespace Domain.Entities
         public Department Department { get; set; }
         public int? DepartmentId { get; set; }
         public ICollection<UserPatient> UserPatients { get; set; }
+        //public ICollection<Role> Roles { get; set; }
     }
 }
