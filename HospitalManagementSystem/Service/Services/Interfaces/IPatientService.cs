@@ -9,7 +9,8 @@ namespace Service.Services.Interfaces
     public interface IPatientService
     {
         Task Create(CreatePatientsDTO createPatients);
-        Task<Paginate<UserPatientDTO>> GetAll(string userId, int take, int lastPatientId, int page);
+        Task<Paginate<UserPatientDTO>> GetAllFromUserPatient(string userId, int take, int lastPatientId, int page);
+        Task<Paginate<PatientDTO>> GetAll(int take, int lastPatientId, int page);
         Task<PatientDTO> GetById(int id);
         Task Put(int id, PutPatientsDTO putPatientsDTO);
         Task Delete(int id);

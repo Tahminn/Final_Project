@@ -17,6 +17,9 @@ function SidebarContent() {
 
     const [showPatientsBoard, setShowPatientsBoard] = useState(false);
     const [showProfileBoard, setShowProfileBoard] = useState(false);
+    const [showDoctorsBoard, setShowDoctorsBoard] = useState(false);
+    const [showNursesBoard, setShowNursesBoard] = useState(false);
+    const [showReceptionistsBoard, setShowReceptionistsBoard] = useState(false);
     const { user: currentUser } = useSelector((state) => state.auth);
     // const dispatch = useDispatch();
 
@@ -24,11 +27,17 @@ function SidebarContent() {
         if (currentUser) {
             setShowPatientsBoard(true);
             setShowProfileBoard(true);
+            setShowDoctorsBoard(true);
+            setShowNursesBoard(true);
+            setShowReceptionistsBoard(true);
         } else {
             setShowPatientsBoard(false);
             setShowProfileBoard(false);
+            setShowDoctorsBoard(false);
+            setShowNursesBoard(false);
+            setShowReceptionistsBoard(false);
         }
-      }, [currentUser]);
+    }, [currentUser]);
 
     const ref = useRef()
 
@@ -49,18 +58,42 @@ function SidebarContent() {
                             </Link>
                         </li>
                         <li>
-                        { showPatientsBoard && (
+                            {showPatientsBoard && (
                                 <Link to="/profile" className="waves-effect">
                                     <i className="mdi mdi-airplay"></i>
                                     <span>Profile</span>
                                 </Link>
-                        )}
+                            )}
                         </li>
                         <li>
-                            { showPatientsBoard && (
+                            {showPatientsBoard && (
                                 <Link to="/patients" className="waves-effect">
                                     <i className="mdi mdi-airplay"></i>
                                     <span>Patients</span>
+                                </Link>
+                            )}
+                        </li>
+                        <li>
+                            {showDoctorsBoard && (
+                                <Link to="/doctors" className="waves-effect">
+                                    <i className="mdi mdi-airplay"></i>
+                                    <span>Doctors</span>
+                                </Link>
+                            )}
+                        </li>
+                        <li>
+                            {showNursesBoard && (
+                                <Link to="/nurses" className="waves-effect">
+                                    <i className="mdi mdi-airplay"></i>
+                                    <span>Nurses</span>
+                                </Link>
+                            )}
+                        </li>
+                        <li>
+                            {showReceptionistsBoard && (
+                                <Link to="/receptionists" className="waves-effect">
+                                    <i className="mdi mdi-airplay"></i>
+                                    <span>Receptionists</span>
                                 </Link>
                             )}
                         </li>

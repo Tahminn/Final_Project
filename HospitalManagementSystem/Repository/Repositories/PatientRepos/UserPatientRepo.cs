@@ -26,30 +26,14 @@ namespace Repository.Repositories.PatientRepos
         {
             try
             {
-                List<UserPatient> patients = new();
-
-                if (userId != null)
-                {
-                    patients = await entities
-                        .Where(p => p.User.Id == userId && p.Id < lastPatientId)
-                        .Include(p => p.User)
-                        .Include(p => p.Patient)
-                        .ThenInclude(p => p.Gender)
-                        .OrderByDescending(p => p.Id)
-                        .Take(take)
-                        .ToListAsync();
-                }
-                else
-                {
-                    patients = await entities
-                        .Where(p => p.Id < lastPatientId)
-                        .Include(p => p.User)
-                        .Include(p => p.Patient)
-                        .ThenInclude(p => p.Gender)
-                        .OrderByDescending(p => p.Id)
-                        .Take(take)
-                        .ToListAsync();
-                }
+                List<UserPatient> patients = await entities
+                    .Where(p => p.User.Id == userId && p.Id < lastPatientId)
+                    .Include(p => p.User)
+                    .Include(p => p.Patient)
+                    .ThenInclude(p => p.Gender)
+                    .OrderByDescending(p => p.Id)
+                    .Take(take)
+                    .ToListAsync();
 
                 return patients;
             }

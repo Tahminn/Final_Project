@@ -43,18 +43,34 @@ namespace Service.Services.PatientServices
             await _patientRepo.Create(patient/*, patientTriage*/);
         }
 
-        public async Task<Paginate<UserPatientDTO>> GetAll(string userId, int take, int lastPatientId, int page)
+        public async Task<Paginate<UserPatientDTO>> GetAllFromUserPatient(string userId, int take, int lastPatientId, int page)
         {
-            
+
             List<UserPatient> patients = await _userPatientRepo.GetAllAsync(userId, take, lastPatientId);
 
-            var patientDTO = _mapper.Map<List<UserPatientDTO>>(patients);
+            List<UserPatientDTO> patientDTO = _mapper.Map<List<UserPatientDTO>>(patients);
 
-            int totalPage = Helper.GetPageCount(patients.Count(), take);
+            var count = await _context.GetPatientsCounts.FirstOrDefaultAsync();
+
+            int totalPage = Helper.GetPageCount(count.CountPatient, take);
 
             Paginate<UserPatientDTO> paginatedUserPatient = new Paginate<UserPatientDTO>(patientDTO, page, totalPage);
-            
+
             return paginatedUserPatient;
+        }
+
+        public async Task<Paginate<PatientDTO>> GetAll(int take, int lastPatientId, int page)
+        {
+            List<Patient> patients = await _patientRepo.GetAllAsync(take, lastPatientId);
+            List<PatientDTO> patientDTO = _mapper.Map<List<PatientDTO>>(patients);
+
+            var count = await _context.GetPatientsCounts.FirstOrDefaultAsync();
+
+            int totalPage = Helper.GetPageCount(count.CountPatient, take);
+
+            Paginate<PatientDTO> paginatedPatient = new Paginate<PatientDTO>(patientDTO, page, totalPage);
+
+            return paginatedPatient;
         }
 
         public async Task<PatientDTO> GetById(int id)

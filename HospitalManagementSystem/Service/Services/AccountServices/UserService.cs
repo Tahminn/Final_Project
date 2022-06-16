@@ -43,17 +43,16 @@ namespace Service.Services
             await _userRepo.CreateAsync(user);
         }
 
-        public async Task<Paginate<GetUsersDTO>> GetAll(string roleName, int take, int page)
+        public async Task<IList<GetUsersDTO>> GetAll(string roleName)
         {
-            if(take == 0) take = 10;
+            //if(take == 0) take = 10;
 
-            int skip = (page - 1) * take;
+            //int skip = (page - 1) * take;
 
-            var user = await _userManager.GetUsersInRoleAsync(roleName);
 
-            var userCount = user.Count();
+            //var userCount = user.Count();
 
-            user = user.Skip(skip).Take(take).ToList();
+            //user = user.Skip(skip).Take(take).ToList();
 
             //foreach (var item in user)
             //{
@@ -76,13 +75,15 @@ namespace Service.Services
 
             //var userCount = await _userRepo.GetCountByRoleAsync(roleName);
 
+
+            //int totalPage = Helper.GetPageCount(userCount, take);
+
+            //Paginate<GetUsersDTO> paginatedUsers = new Paginate<GetUsersDTO>(userDTO, page, totalPage);
+            var user = await _userManager.GetUsersInRoleAsync(roleName);
+
             var userDTO = _mapper.Map<IList<GetUsersDTO>>(user);
 
-            int totalPage = Helper.GetPageCount(userCount, take);
-
-            Paginate<GetUsersDTO> paginatedUsers = new Paginate<GetUsersDTO>(userDTO, page, totalPage);
-
-            return paginatedUsers;
+            return userDTO;
         }
 
         public async Task<GetUsersDTO> GetByUserName(string id)

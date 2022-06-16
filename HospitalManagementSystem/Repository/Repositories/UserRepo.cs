@@ -27,7 +27,7 @@ namespace Repository.Repositories
             if (entity is null) throw new ArgumentNullException(nameof(entity));
 
             await entities.AddAsync(entity);
-            await _userManager.AddToRoleAsync(entity, "Member");
+            await _userManager.AddToRoleAsync(entity, "Doctor");
             await _context.SaveChangesAsync();
         }
 

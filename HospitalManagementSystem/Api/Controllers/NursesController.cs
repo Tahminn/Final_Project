@@ -48,13 +48,13 @@ namespace Api.Controllers
         [Route("get-all")]
         [HttpPost]
         //[Authorize(Policy = PolicyTypes.Nurses.View)]
-        public async Task<IActionResult> GetAll([FromBody] GetPageUserDTO getPageUserDTO)
+        public async Task<IActionResult> GetAll()
         {
-            var paginatedUsers = await _userService.GetAll(roleName, getPageUserDTO.Take, getPageUserDTO.Page);
+            var users = await _userService.GetAll(roleName);
 
-            if (paginatedUsers == null) return NotFound();
+            if (users == null) return NotFound();
 
-            return Ok(paginatedUsers);
+            return Ok(users);
         }
 
         [Route("get/{id}")]

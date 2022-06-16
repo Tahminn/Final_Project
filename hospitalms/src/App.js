@@ -7,6 +7,9 @@ import Register from './components/Account/Register';
 import { Route, Routes, Navigate, Link } from 'react-router-dom';
 import ProtectedRoute from './pages/ProtectedRoute'
 import PatientsBoard from './pages/PatientsBoard'
+import DoctorsBoard from './pages/DoctorsBoard'
+import NursesBoard from './pages/NursesBoard'
+import ReceptionistsBoard from './pages/ReceptionistsBoard'
 import Profile from './pages/Profile'
 //style
 import "../src/assets/scss/theme.scss";
@@ -23,6 +26,9 @@ function App() {
           <Route exact path='/' element={<Layout />} >
             <Route path="/patients" element={<PatientsBoard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/doctors" element={<DoctorsBoard />} />
+            <Route path="/nurses" element={<NursesBoard />} />
+            <Route path="/receptionists" element={<ReceptionistsBoard />} />
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />

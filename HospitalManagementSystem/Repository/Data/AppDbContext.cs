@@ -18,6 +18,7 @@ namespace Repository.Data
         public DbSet<Medicine> Medicine { get; set; }
         public DbSet<Operation> Operation { get; set; }
         public DbSet<Setting> Setting { get; set; }
+        public DbSet<GetPatientsCount> GetPatientsCounts { get; set; }
 
         #endregion
 
@@ -30,6 +31,14 @@ namespace Repository.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
+
+            //get view
+            modelBuilder.Entity<GetPatientsCount>(opt =>
+            {
+                opt.HasNoKey();
+                opt.ToView("GetPatientsCount");
+            });
+
 
             //Change Table Name
             modelBuilder.Entity<User>(b =>

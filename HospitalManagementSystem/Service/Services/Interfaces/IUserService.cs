@@ -11,7 +11,7 @@ namespace Service.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<Paginate<GetUsersDTO>> GetAll(string roleName, int take, int page);
+        Task<IList<GetUsersDTO>> GetAll(string roleName);
         Task Create(CreateUserDTO createUser);
         Task<GetUsersDTO> GetByUserName(string id);
         Task Put(PutUserDTO putUserDTO);

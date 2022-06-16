@@ -1,5 +1,5 @@
 import axios from "axios";
-import serverApi from "../../api/api.json"
+import serverApi from "./api.json"
 
 const register = (username, email, password) => {
   return axios.post(`${serverApi.serverNameForAccount}/Register`, {

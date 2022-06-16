@@ -17,6 +17,26 @@ namespace Repository.Repositories.PatientRepos
             entities = _context.Set<Patient>();
         }
 
+        public async Task<List<Patient>> GetAllAsync(int take, int lastPatientId)
+        {
+            try
+            {
+
+                List<Patient> patients = await entities
+                    .Where(p => p.Id < lastPatientId)
+                    .Include(p => p.Gender)
+                    .OrderByDescending(p => p.Id)
+                    .Take(take)
+                    .ToListAsync();
+
+                return patients;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<Patient> GetById(int id)
         {
             try

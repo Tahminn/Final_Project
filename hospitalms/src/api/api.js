@@ -1,5 +1,5 @@
 import axios from "axios";
-import serverApi from "./api.json"
+import serverApi from "../store/services/api.json"
 
 axios.interceptors.request.use(
     function (config){

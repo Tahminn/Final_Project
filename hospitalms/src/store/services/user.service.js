@@ -1,21 +1,49 @@
 import axios from "axios";
 import authHeader from "./auth-header";
-import api from "../../api/api.json"
+import api from "./api.json"
 
-const getPatientBoard = () => {
-  debugger;
-  const take = 1;
-  const page = 1;
-  const lastPatientId = 6;
-  console.log(authHeader());
+const getDoctorsBoard = () => {
+
+  const config = {
+    headers: authHeader()
+  };
   return axios
-    .post(`${api.serverNameForPatients}/get-all`,
-   {headers: authHeader(),
-    body: {take , page, lastPatientId}
-   })
+    .post(`${api.serverNameForDoctors}/get-all`,
+    config
+   )
 };
 
-console.log(getPatientBoard);
+
+const getNursesBoard = () => {
+  const config = {
+    headers: authHeader()
+  };
+  return axios
+    .post(`${api.serverNameForNurses}/get-all`,
+    config
+   )
+};
+
+
+const getReceptionistsBoard = () => {
+  const config = {
+    headers: authHeader()
+  };
+  return axios
+    .post(`${api.serverNameForReceptionists}/get-all`,
+    config
+   )
+};
+
+const getPatientsBoard = () => {
+  const config = {
+    headers: authHeader()
+  };
+  return axios
+    .post(`${api.serverNameForPatients}/get-all`,
+    config
+   )
+};
 
 
 // const login = (email, password) => {
@@ -33,6 +61,9 @@ console.log(getPatientBoard);
 //     });
 // };
 const userService = {
-    getPatientBoard
+    getPatientsBoard,
+    getDoctorsBoard,
+    getNursesBoard,
+    getReceptionistsBoard
 };
 export default userService
