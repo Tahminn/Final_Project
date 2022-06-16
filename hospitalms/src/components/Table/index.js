@@ -6,8 +6,7 @@ function Table({ columns, data }) {
   const defaultColumn = useMemo(
     () => ({
       minWidth: 300,
-      width: 150,
-      maxWidth: 1200,
+      width: 200,
     }),
     []
   )
@@ -45,23 +44,25 @@ function Table({ columns, data }) {
     useResizeColumns,
   )
 
+
+
   return (
     <>
       <div className="ReactTable -striped -highlight">
-        <div className="rt-table">
-          <div {...getTableProps()} className="rt-thead -header" style={{ minWidth: '300px' }}>
+        <div {...getTableProps()} className="rt-table">
+          <div className="rt-thead -header" style={{ minWidth: '300px' }}>
             {headerGroups.map(headerGroup => (
               <div {...headerGroup.getHeaderGroupProps()} className="rt-tr">
                 {headerGroup.headers.map(function (column, i) {
-                  return <div key={i} className="rt-resizable-header -cursor-pointer rt-th" style={{ flex: '100 0 auto', width: '100px' }}>
-                    <div {...column.getHeaderProps(column.getSortByToggleProps())} className="rt-resizable-header-content">{column.render('Header')}</div>
-                    <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' 🔽'
-                        : ' 🔼'
-                      : ''}
-                  </span>
+                  return <div key={i} className="rt-resizable-header -cursor-pointer rt-th" style={{ flex: '100 0 auto', width: '100px' }}><div {...column.getHeaderProps(column.getSortByToggleProps())} className="rt-resizable-header-content">{column.render('Header')}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? ' 🔽'
+                            : ' 🔼'
+                          : ''}
+                      </span>
+                    </div>
                     {/* <div {...column.getResizerProps()}
                       className={`rt-resizer ${
                         column.isResizing ? 'isResizing' : ''
@@ -72,11 +73,11 @@ function Table({ columns, data }) {
               </div>
             ))}
           </div>
-          <div  {...getTableProps()} className="rt-tbody" style={{ minWidth: '300px' }}>
+          <div  {...getTableBodyProps()} className="rt-tbody" style={{ minWidth: '300px' }}>
             {page.map((row, i) => {
               prepareRow(row)
               return (
-                <div key={i} className="rt-tr-group" {...getTableBodyProps()}>
+                <div key={i} className="rt-tr-group" {...row.getRowProps()}>
                   <div key={i} {...row.getRowProps()} className={`rt-tr ${i % 2 === 0 ? ' -even' : '-odd'}`}>
                     {row.cells.map(function (cell, i) {
                       return <div  {...cell.getCellProps()} className="rt-td" style={{ flex: '100 0 auto', width: '100px' }}>{cell.render('Cell')}</div>

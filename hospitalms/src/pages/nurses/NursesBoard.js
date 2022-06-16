@@ -1,7 +1,7 @@
 import { useState, useEffect, useReducer, useMemo } from "react";
-import UserService from "../store/services/user.service";
+import UserService from "../../store/services/user.service";
 import styled from 'styled-components'
-import Table from '../components/Table'
+import Table from '../../components/Table'
 // ColumnSizing, Expanding, Filters, Grouping, Headers, Ordering, Pagination, Pinning, RowSelection, Sorting,
 // Visibility, buildHeaderGroups, createTable, createTableFactory, createTableInstance, defaultColumnSizing,
 // expandRows, flattenBy, functionalUpdate, getBatchGroups, getColumnFilteredRowModelSync, getCoreRowModelAsync,
@@ -9,10 +9,10 @@ import Table from '../components/Table'
 // getSortedRowModelSync, incrementalMemo, isFunction, isRowSelected, makeStateUpdater, memo, noop, passiveEventSupported,
 // propGetter, render, selectRowsFn, shouldAutoRemoveFilter, useTableInstance
 
-function PaitentsBoard() {
+function NursesBoard() {
   const [content, setContent] = useState([]);
   useEffect(() => {
-    UserService.getDoctorsBoard().then(
+    UserService.getNursesBoard().then(
       (response) => {
         setContent(response.data);
       },
@@ -27,8 +27,8 @@ function PaitentsBoard() {
       }
     );
   }, []);
-  const data = content;
-  // const data = useMemo(() => content, [])
+
+  const data = useMemo(() => content, [])
 
   const columns = useMemo(
     () =>
@@ -97,4 +97,4 @@ function PaitentsBoard() {
     </>
   );
 };
-export default PaitentsBoard;
+export default NursesBoard;

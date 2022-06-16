@@ -16,7 +16,7 @@ import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 // users
-import user4 from "../../../assets/images/users/avatar-4.jpg";
+import user4 from "../../../assets/images/users/avatar-6.jpg";
 
 function ProfileMenu (props) {
 
@@ -25,24 +25,12 @@ function ProfileMenu (props) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    logout();
-    navigate("/SignIn")
+    localStorage.removeItem("user");
+    navigate("/login");
+    window.location.reload();
   }
+  
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("authUser")) {
-  //     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-  //       const obj = JSON.parse(localStorage.getItem("authUser"))
-  //       setusername(obj.displayName)
-  //     } else if (
-  //       process.env.REACT_APP_DEFAULTAUTH === "fake" ||
-  //       process.env.REACT_APP_DEFAULTAUTH === "jwt"
-  //     ) {
-  //       const obj = JSON.parse(localStorage.getItem("authUser"))
-  //       setusername(obj.username)
-  //     }
-  //   }
-  // }, [props.success])
 
   return (
     <React.Fragment>
@@ -60,28 +48,14 @@ function ProfileMenu (props) {
             className="rounded-circle header-profile-user"
             src={user4}
             alt="Header Avatar"
-          />{" "}
+          />
           <span className="d-none d-xl-inline-block ms-1">Tahmin</span>{" "}
           <i className="mdi mdi-chevron-down d-none d-xl-inline-block"></i>{" "}
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <DropdownItem tag="a" href="/profile">
-            {" "}
             <i className="bx bx-user font-size-16 align-middle me-1"></i>{" "}
-            {props.t("View Profile")}{" "}
-          </DropdownItem>
-          <DropdownItem tag="a" href="/#">
-            <i className="bx bx-wallet font-size-16 align-middle me-1"></i>{" "}
-            {props.t("My Wallet")}
-          </DropdownItem>
-          <DropdownItem tag="a" href="#">
-            <span className="badge bg-success float-end">11</span><i
-              className="bx bx-wrench font-size-16 align-middle me-1"></i>{" "}
-            {props.t("Settings")}
-          </DropdownItem>
-          <DropdownItem tag="a" href="auth-lock-screen">
-            <i className="bx bx-lock-open font-size-16 align-middle me-1"></i>{" "}
-            {props.t("Lock screen")}
+            {props.t("View Profile")}
           </DropdownItem>
           <div className="dropdown-divider" />
           <button onClick={handleLogout} className="dropdown-item text-danger">

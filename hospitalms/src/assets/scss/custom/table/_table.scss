@@ -1,3 +1,7 @@
+.rt-resizable-header-content{
+    left: 0 !important;
+
+}
 .ReactTable {
     position:relative;
     display:-webkit-box;
@@ -284,7 +288,6 @@
     border-radius:3px;
     padding:6px;
     font-size:1em;
-    color:rgba(0,0,0,0.6);
     background:rgba(0,0,0,0.1);
     -webkit-transition:all .1s ease;
     transition:all .1s ease;

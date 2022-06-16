@@ -75,7 +75,7 @@ function SidebarContent() {
                         </li>
                         <li>
                             {showDoctorsBoard && (
-                                <Link to="/doctors" className="waves-effect">
+                                <Link to="/doctors/list" className="waves-effect">
                                     <i className="mdi mdi-airplay"></i>
                                     <span>Doctors</span>
                                 </Link>

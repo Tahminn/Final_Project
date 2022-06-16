@@ -21,7 +21,12 @@ import logoLight from "../../../assets/images/logo-light.png";
 
 
 function toggleFullscreen() {
-  if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement) {
+  if (
+    !document.fullscreenElement &&
+    /* alternative standard method */ !document.mozFullScreenElement &&
+    !document.webkitFullscreenElement
+  ) {
+    // current working methods
     if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen();
     } else if (document.documentElement.mozRequestFullScreen) {
@@ -30,6 +35,14 @@ function toggleFullscreen() {
       document.documentElement.webkitRequestFullscreen(
         Element.ALLOW_KEYBOARD_INPUT
       );
+    }
+  } else {
+    if (document.cancelFullScreen) {
+      document.cancelFullScreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) {
+      document.webkitCancelFullScreen();
     }
   }
 }
@@ -98,22 +111,22 @@ function Header() {
                   <i className="mdi mdi-fullscreen"></i>
                 </button>
               </Dropdown>
-              {/* <Notifications/> <ProfileMenu /> */}
+              <Notifications/> <ProfileMenu />
             </div>
             <div>
               <div className="navbar-brand-box">
                 <Link to="/" className="logo logo-dark">
                   <span className="logo-sm">
-                    <img src={logoSm} alt="" height="20" />
+                    <img src={logoLight} alt="" height="20" />
                   </span>
                   <span className="logo-lg">
-                    <img src={logoDark} alt="" height="19" />
+                    <img src={logoLight} alt="" height="19" />
                   </span>
                 </Link>
 
                 <Link to="/" className="logo logo-light">
                   <span className="logo-sm">
-                    <img src={logoSm} alt="" height="20" />
+                    <img src={logoLight} alt="" height="20" />
                   </span>
                   <span className="logo-lg">
                     <img src={logoLight} alt="" height="19" />

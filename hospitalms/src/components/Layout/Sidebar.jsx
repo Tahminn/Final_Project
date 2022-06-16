@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import avatar2 from "../../assets/images/users/avatar-2.jpg"
+import avatar2 from "../../assets/images/users/avatar-3.jpg"
 import SidebarContent from './SidebarContent'
-
 
 
 function Sidebar() {

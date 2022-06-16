@@ -1,7 +1,9 @@
 import { useState, useEffect, useReducer, useMemo } from "react";
-import UserService from "../store/services/user.service";
+import UserService from "../../store/services/user.service";
 import styled from 'styled-components'
-import Table from '../components/Table'
+import Table from '../../components/Table';
+import DoctorCreate from "./DoctorCreate"
+import { Route, Routes, Navigate, Outlet, Link } from 'react-router-dom';
 // ColumnSizing, Expanding, Filters, Grouping, Headers, Ordering, Pagination, Pinning, RowSelection, Sorting,
 // Visibility, buildHeaderGroups, createTable, createTableFactory, createTableInstance, defaultColumnSizing,
 // expandRows, flattenBy, functionalUpdate, getBatchGroups, getColumnFilteredRowModelSync, getCoreRowModelAsync,
@@ -9,66 +11,7 @@ import Table from '../components/Table'
 // getSortedRowModelSync, incrementalMemo, isFunction, isRowSelected, makeStateUpdater, memo, noop, passiveEventSupported,
 // propGetter, render, selectRowsFn, shouldAutoRemoveFilter, useTableInstance
 
-function PaitentsBoard() {
-  const [content, setContent] = useState([]);
-  useEffect(() => {
-    UserService.getNursesBoard().then(
-      (response) => {
-        setContent(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setContent(_content);
-      }
-    );
-  }, []);
-
-  const data = useMemo(() => content, [])
-
-  const columns = useMemo(
-    () =>
-      [
-        {
-          Header: 'Name',
-          accessor: 'name',
-        },
-        {
-          Header: 'Last Name',
-          accessor: 'surname',
-        },
-        {
-          Header: 'Age',
-          accessor: 'age',
-        },
-        {
-          Header: 'Email',
-          accessor: 'email',
-        }
-        // {
-        //   Header: 'Birthday',
-        //   accessor: 'birthday',
-        // },
-        // {
-        //   Header: 'Department',
-        //   accessor: 'department',
-        // },
-        // {
-        //   Header: 'Gender',
-        //   accessor: 'gender',
-        // },
-        // {
-        //   Header: 'Occupation',
-        //   accessor: 'occupation',
-        // }
-      ],
-    []
-  )
-
+function DoctorsBoard() {
   return (
     <>
       <div className="row">
@@ -89,7 +32,7 @@ function PaitentsBoard() {
         <div className="col-lg-12">
           <div className="card">
             <div className="card-body">
-              <Table columns={columns} data={data} />
+              <Outlet/>
             </div>
           </div>
         </div>
@@ -97,4 +40,4 @@ function PaitentsBoard() {
     </>
   );
 };
-export default PaitentsBoard;
+export default DoctorsBoard;
