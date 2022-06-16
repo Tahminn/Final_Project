@@ -21,7 +21,7 @@ function ReceptionistsBoard() {
             <div className="page-title-right">
               <ol className="breadcrumb m-0">
                 <li className="breadcrumb-item">
-                  <a href="/dashboard">Dashboard</a>
+                  <Link to="/">Dashboard</Link>
                 </li>
               </ol>
             </div>

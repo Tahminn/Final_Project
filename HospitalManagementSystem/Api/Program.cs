@@ -91,6 +91,21 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy(PolicyTypes.Patients.View, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Patients.View); });
     options.AddPolicy(PolicyTypes.Patients.Edit, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Patients.Edit); });
     options.AddPolicy(PolicyTypes.Patients.Delete, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Patients.Delete); });
+
+    options.AddPolicy(PolicyTypes.Doctors.Create, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Doctors.Create); });
+    options.AddPolicy(PolicyTypes.Doctors.View, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Doctors.View); });
+    options.AddPolicy(PolicyTypes.Doctors.Edit, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Doctors.Edit); });
+    options.AddPolicy(PolicyTypes.Doctors.Delete, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Doctors.Delete); });
+
+    options.AddPolicy(PolicyTypes.Nurses.Create, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Nurses.Create); });
+    options.AddPolicy(PolicyTypes.Nurses.View, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Nurses.View); });
+    options.AddPolicy(PolicyTypes.Nurses.Edit, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Nurses.Edit); });
+    options.AddPolicy(PolicyTypes.Nurses.Delete, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Nurses.Delete); });
+
+    options.AddPolicy(PolicyTypes.Receptionists.Create, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Receptionists.Create); });
+    options.AddPolicy(PolicyTypes.Receptionists.View, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Receptionists.View); });
+    options.AddPolicy(PolicyTypes.Receptionists.Edit, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Receptionists.Edit); });
+    options.AddPolicy(PolicyTypes.Receptionists.Delete, policy => { policy.RequireClaim(CustomClaimTypes.Permission, PolicyTypes.Receptionists.Delete); });
 });
 
 #endregion

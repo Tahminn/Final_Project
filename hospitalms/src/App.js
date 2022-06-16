@@ -40,11 +40,11 @@ function App() {
               <Route path="/doctors/create" element={<DoctorsCreate />} />
               <Route path="/doctors/list" element={<DoctorsList />} />
             </Route>
-            <Route path="/nurses" element={<NursesBoard />} >
+            <Route path="/nurses/" element={<NursesBoard />} >
               <Route path="/nurses/create" element={<NursesCreate />} />
               <Route path="/nurses/list" element={<NursesList />} />
             </Route>
-            <Route path="/receptionists" element={<ReceptionistsBoard />} >
+            <Route path="/receptionists/" element={<ReceptionistsBoard />} >
               <Route path="/receptionists/create" element={<ReceptionistsCreate />} />
               <Route path="/receptionists/list" element={<ReceptionistsList />} />
             </Route>

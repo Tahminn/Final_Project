@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Repository.Data;
 using Service.DTOs.ControllerPropDTOs.AccountDTOs;
 using Service.Services.Interfaces;
-using System.Security.Claims;
 
 namespace Api.Controllers
 {
@@ -30,7 +28,7 @@ namespace Api.Controllers
                                  IAccountService accountService,
                                  AppDbContext context,
                                  IHttpContextAccessor httpContextAccessor)
-                               /*IRoleClaimsService roleClaimsService*/
+        /*IRoleClaimsService roleClaimsService*/
         {
             _userManager = userManager;
             _roleManager = roleManager;

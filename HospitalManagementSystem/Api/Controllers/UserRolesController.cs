@@ -24,7 +24,7 @@ namespace Api.Controllers
 
         [Route("get-all")]
         [HttpPost]
-        public async Task<IActionResult> Index([FromBody]string userId)
+        public async Task<IActionResult> Index([FromBody] string userId)
         {
             var viewModel = new List<UserRolesDTO>();
             var user = await _userManager.FindByIdAsync(userId);

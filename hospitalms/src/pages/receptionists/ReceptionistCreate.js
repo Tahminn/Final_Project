@@ -4,9 +4,10 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { register } from "../../store/slices/auth";
 import { clearMessage } from "../../store/slices/message";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ReceptionistCreate() {
+
     const [successful, setSuccessful] = useState(false);
     const { message } = useSelector((state) => state.message);
     const dispatch = useDispatch();
@@ -50,6 +51,7 @@ function ReceptionistCreate() {
             .unwrap()
             .then(() => {
                 setSuccessful(true);
+                navigate("/receptionists/list");
             })
             .catch(() => {
                 setSuccessful(false);

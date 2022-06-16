@@ -26,7 +26,7 @@ namespace Api.Controllers
 
         [Route("add")]
         [HttpPost]
-        public async Task<IActionResult> AddRole([FromBody]string roleName)
+        public async Task<IActionResult> AddRole([FromBody] string roleName)
         {
             if (roleName == null) return BadRequest(string.Empty);
 

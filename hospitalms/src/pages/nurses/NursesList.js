@@ -30,6 +30,7 @@ function NursesList() {
             }
         );
     }, []);
+
     const data = content;
     // const data = useMemo(() => content, [])
 
@@ -77,9 +78,10 @@ function NursesList() {
         []
     )
 
-    const datas = useMemo(() => makeData(1000), [])
+    //use datas instead to get 1000 data
+    // const datas = useMemo(() => makeData(1000), [])
 
-    console.log(datas);
+    console.log(data);
 
     return (
         <>
@@ -94,7 +96,7 @@ function NursesList() {
                     </div>
                 </div>
             </div>
-            <Table columns={columns} data={datas} />
+            <Table columns={columns} data={data} />
         </>
     );
 };

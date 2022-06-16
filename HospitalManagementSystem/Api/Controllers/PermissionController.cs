@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Service.Constants;
 using Service.DTOs.ControllerPropDTOs.AccountDTOs;
 using Service.Helpers;
 using Service.Services.Interfaces;

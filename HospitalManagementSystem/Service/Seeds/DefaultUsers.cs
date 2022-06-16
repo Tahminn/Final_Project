@@ -34,12 +34,14 @@ namespace Service.Seeds
         {
             var adminRole = await roleManager.FindByNameAsync("SuperAdmin");
             await roleManager.AddPermissionClaim(adminRole, "patients");
-            await roleManager.AddPermissionClaim(adminRole, "users");
+            await roleManager.AddPermissionClaim(adminRole, "doctors");
+            await roleManager.AddPermissionClaim(adminRole, "nurses");
+            await roleManager.AddPermissionClaim(adminRole, "receptionists");
             await roleManager.AddPermissionClaim(adminRole, "operations");
             await roleManager.AddPermissionClaim(adminRole, "beds");
             await roleManager.AddPermissionClaim(adminRole, "tests");
             await roleManager.AddPermissionClaim(adminRole, "bills");
-            await roleManager.AddPermissionClaim(adminRole, "payments");
+            await roleManager.AddPermissionClaim(adminRole, "payments"); 
         }
 
         public static async Task AddPermissionClaim(this RoleManager<IdentityRole> roleManager, IdentityRole role, string module)

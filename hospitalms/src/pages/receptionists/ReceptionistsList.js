@@ -78,9 +78,9 @@ function ReceptionistsList() {
         []
     )
 
-    const datas = useMemo(() => makeData(1000), [])
+    // const datas = useMemo(() => makeData(1000), [])
 
-    console.log(datas);
+    console.log(data);
 
     return (
         <>
@@ -95,7 +95,7 @@ function ReceptionistsList() {
                     </div>
                 </div>
             </div>
-            <Table columns={columns} data={datas} />
+            <Table columns={columns} data={data} />
         </>
     );
 };

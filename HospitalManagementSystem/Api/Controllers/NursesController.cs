@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Repository.Data;
 using Service.Constants;
-using Service.DTOs.ControllerPropDTOs.PatientDTOs.PutPatients;
 using Service.DTOs.ControllerPropDTOs.UserDTOs;
-using Service.DTOs.ControllerPropDTOs.UserDTOs.GetUser;
 using Service.DTOs.ControllerPropDTOs.UserDTOs.PutUser;
 using Service.Services.Interfaces;
 
@@ -59,7 +56,7 @@ namespace Api.Controllers
 
         [Route("get/{id}")]
         [HttpPost]
-        //[Authorize(Policy = PolicyTypes.Nurses.View)]
+        [Authorize(Policy = PolicyTypes.Nurses.View)]
         public async Task<IActionResult> GetById([FromRoute] string id)
         {
             var user = await _userService.GetByUserName(id);
@@ -74,7 +71,7 @@ namespace Api.Controllers
 
         [HttpPut]
         [Route("put/{id}")]
-        //[Authorize(Policy = PolicyTypes.Nurses.Edit)]
+        [Authorize(Policy = PolicyTypes.Nurses.Edit)]
         public async Task<IActionResult> Put([FromRoute] string id, [FromBody] PutUserDTO putUserDTO)
         {
 
@@ -92,7 +89,7 @@ namespace Api.Controllers
 
         [HttpDelete]
         [Route("delete/{id}")]
-        //[Authorize(Policy = PolicyTypes.Patients.Delete)]
+        [Authorize(Policy = PolicyTypes.Patients.Delete)]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null) return BadRequest();

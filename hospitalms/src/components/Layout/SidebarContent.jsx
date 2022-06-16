@@ -83,7 +83,7 @@ function SidebarContent() {
                         </li>
                         <li>
                             {showNursesBoard && (
-                                <Link to="/nurses" className="waves-effect">
+                                <Link to="/nurses/list" className="waves-effect">
                                     <i className="mdi mdi-airplay"></i>
                                     <span>Nurses</span>
                                 </Link>
@@ -91,7 +91,7 @@ function SidebarContent() {
                         </li>
                         <li>
                             {showReceptionistsBoard && (
-                                <Link to="/receptionists" className="waves-effect">
+                                <Link to="/receptionists/list" className="waves-effect">
                                     <i className="mdi mdi-airplay"></i>
                                     <span>Receptionists</span>
                                 </Link>
